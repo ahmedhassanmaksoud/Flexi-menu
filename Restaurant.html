@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -27,6 +28,11 @@
       color: var(--text);
       min-height: 100vh;
       touch-action: pan-y;
+    }
+
+    html,
+    body {
+      overflow: hidden;
     }
 
     body::before {
@@ -131,8 +137,8 @@
     }
 
     .products {
-      height: 380px;
-      min-height: 340px;
+      height: 360px;
+      min-height: 180px;
       margin-bottom: 16px;
       border-radius: 24px;
       background: var(--products-bg, rgba(16, 16, 20, 0.6));
@@ -329,8 +335,55 @@
       border-radius: 10px;
       font-size: 12px;
     }
+
+    @media (max-height: 640px) {
+      .app {
+        padding-top: 72px;
+      }
+
+      .header {
+        padding: 10px 14px;
+      }
+
+      .header-logo {
+        width: 36px;
+        height: 36px;
+        font-size: 18px;
+      }
+
+      .header-title {
+        font-size: 15px;
+      }
+
+      .cat-emoji {
+        font-size: 32px;
+      }
+
+      .details-image {
+        width: 72px;
+        height: 72px;
+      }
+
+      .details-title {
+        font-size: 17px;
+      }
+
+      .details-price-large {
+        font-size: 24px;
+      }
+
+      .ingredients-title {
+        font-size: 12px;
+      }
+
+      .ingredient-tag {
+        font-size: 11px;
+        padding: 6px 10px;
+      }
+    }
   </style>
 </head>
+
 <body>
   <div class="app">
     <header class="header">
@@ -357,9 +410,12 @@
       <div class="details-header">
         <div class="details-image"><img id="detailsImg" src="" alt=""></div>
         <div style="flex:1">
-          <div style="padding:4px 12px;background:rgba(16,185,129,0.3);border:1px solid rgba(16,185,129,0.5);border-radius:8px;display:inline-block;font-size:10px;font-weight:800;color:#10b981;">MOST ORDERED</div>
+          <div
+            style="padding:4px 12px;background:rgba(16,185,129,0.3);border:1px solid rgba(16,185,129,0.5);border-radius:8px;display:inline-block;font-size:10px;font-weight:800;color:#10b981;">
+            MOST ORDERED</div>
           <h3 class="details-title" id="detailsTitle">Loading...</h3>
-          <div style="color:var(--gold);font-size:15px;">⭐ <span id="detailsRating">4.8</span> <span style="color:#777">(124)</span></div>
+          <div style="color:var(--gold);font-size:15px;">⭐ <span id="detailsRating">4.8</span> <span
+              style="color:#777">(124)</span></div>
         </div>
         <div class="details-price-large" id="detailsPrice">$0.00</div>
       </div>
@@ -381,7 +437,8 @@
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script>
     let audioContext;
-    
+    let lastFeedback = 0;
+
     function initAudio() {
       if (!audioContext) {
         audioContext = new (window.AudioContext || window.webkitAudioContext)();
@@ -390,22 +447,38 @@
 
     function playFeedback() {
       initAudio();
+      const nowTime = performance.now();
+      if (nowTime - lastFeedback < 120) return;
+      lastFeedback = nowTime;
+
+      // ────── الصوت (موجود أصلًا) ──────
       const osc = audioContext.createOscillator();
       const gain = audioContext.createGain();
-      
-      osc.connect(gain);
-      gain.connect(audioContext.destination);
-      
-      osc.frequency.value = 800;
+      const filter = audioContext.createBiquadFilter();
+
       osc.type = 'sine';
-      
-      gain.gain.setValueAtTime(0.03, audioContext.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.015);
-      
-      osc.start(audioContext.currentTime);
-      osc.stop(audioContext.currentTime + 0.015);
-      
-      if (navigator.vibrate) navigator.vibrate(3);
+      osc.frequency.setValueAtTime(600, audioContext.currentTime);
+
+      filter.type = 'lowpass';
+      filter.frequency.setValueAtTime(1200, audioContext.currentTime);
+
+      gain.gain.setValueAtTime(0, audioContext.currentTime);
+      gain.gain.linearRampToValueAtTime(0.02, audioContext.currentTime + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.0008, audioContext.currentTime + 0.14);
+
+      osc.connect(filter);
+      filter.connect(gain);
+      gain.connect(audioContext.destination);
+
+      osc.start();
+      osc.stop(audioContext.currentTime + 0.14);
+
+      // ────── الاهتزاز الجديد (Vibration) ──────
+      if ('vibrate' in navigator) {
+        navigator.vibrate([30, 20, 40]); // نمط اهتزاز قصير وحلو
+        // أو
+        navigator.vibrate(60); // اهتزاز بسيط 60 مللي ثانية
+      }
     }
 
     const params = new URLSearchParams(window.location.search);
@@ -432,7 +505,7 @@
       const space = 8;
       let target = h - headerH - catH - detailsH - topPad - bottomPad - space;
       if (!isFinite(target)) target = 380;
-      target = Math.max(280, Math.min(420, target));
+      target = Math.max(160, Math.min(420, target));
       if (products) products.style.height = target + 'px';
     }
 
@@ -460,7 +533,7 @@
 
     function updateDetails(prod) {
       if (isScrolling) return;
-      
+
       document.getElementById('detailsImg').src = prod.image;
       document.getElementById('detailsTitle').textContent = prod.name;
       document.getElementById('detailsPrice').textContent = `$${prod.price.toFixed(2)}`;
@@ -486,7 +559,7 @@
 
     function loadRestaurant(data) {
       restaurant = data;
-      
+
       const t = restaurant.theme;
       document.documentElement.style.setProperty('--bg', t.bg);
       document.documentElement.style.setProperty('--text', t.text);
@@ -500,7 +573,7 @@
       document.documentElement.style.setProperty('--products-bg', t.productsBackground);
       document.documentElement.style.setProperty('--header-bg', t.headerBackground);
       document.documentElement.style.setProperty('--details-bg', t.detailsBackground);
-      
+
       document.body.style.fontFamily = t.font + ', sans-serif';
 
       if (t.font !== 'Inter') {
@@ -514,7 +587,7 @@
       document.getElementById('restaurantName').textContent = restaurant.name;
 
       restaurant.categories.forEach(createCat);
-      
+
       catSwiper = new Swiper('#catSwiper', {
         slidesPerView: 5,
         centeredSlides: true,
@@ -532,8 +605,8 @@
         touchRatio: 1.5,
         threshold: 3,
         passiveListeners: true,
-        on: { 
-          slideChange() { 
+        on: {
+          slideChange() {
             currentCatIndex = this.realIndex ?? this.activeIndex ?? 0;
             playFeedback();
             loadCategory();
@@ -547,7 +620,7 @@
         cat.products.forEach(createProd);
 
         if (prodSwiper) prodSwiper.destroy(true, true);
-        
+
         prodSwiper = new Swiper('#prodSwiper', {
           direction: 'vertical',
           slidesPerView: 3,
@@ -591,14 +664,14 @@
       loadCategory();
       updateDetails(restaurant.categories[0].products[0]);
       adjustLayout();
-      
+
       if ('ResizeObserver' in window) {
         const ro = new ResizeObserver(() => adjustLayout());
         const detailsEl = document.querySelector('.details-section');
         if (detailsEl) ro.observe(detailsEl);
       }
       window.addEventListener('resize', adjustLayout, { passive: true });
-      
+
       document.addEventListener('touchstart', initAudio, { once: true, passive: true });
     }
 
@@ -614,4 +687,5 @@
       });
   </script>
 </body>
+
 </html>
