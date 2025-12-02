@@ -38,9 +38,14 @@
     .app {
       max-width: 420px;
       margin: 0 auto;
-      padding: 90px 16px 140px;
+      padding: 82px 16px 16px;
       position: relative;
       z-index: 1;
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
     }
 
     .header {
@@ -52,11 +57,10 @@
       max-width: 388px;
       z-index: 100;
       padding: 14px 18px;
-      border-radius: 18px;
+      border-radius: 22px;
       background: var(--header-bg, rgba(16, 16, 20, 0.95));
       backdrop-filter: blur(40px);
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
-      border: 1px solid var(--border);
       display: flex;
       align-items: center;
       gap: 12px;
@@ -82,7 +86,13 @@
     }
 
     .categories {
-      margin-bottom: 40px;
+      margin-bottom: 28px;
+      border-radius: 24px;
+      background: var(--products-bg, rgba(16, 16, 20, 0.6));
+      backdrop-filter: blur(20px);
+      padding: 10px 0;
+      overflow: hidden;
+      z-index: 1;
     }
 
     .cat-card {
@@ -117,12 +127,13 @@
     }
 
     .products {
-      height: 520px;
-      margin-bottom: 20px;
-      border-radius: 20px;
+      height: 380px;
+      min-height: 340px;
+      margin-bottom: 16px;
+      border-radius: 24px;
       background: var(--products-bg, rgba(16, 16, 20, 0.6));
       backdrop-filter: blur(20px);
-      padding: 20px 0;
+      padding: 16px 0;
       overflow: hidden;
       z-index: 1;
     }
@@ -138,17 +149,17 @@
 
     .product-card {
       display: flex;
-      gap: 16px;
+      gap: 14px;
       align-items: center;
-      padding: 16px 14px;
-      border-radius: 18px;
+      padding: 12px 12px;
+      border-radius: 22px;
       transition: all .45s;
     }
 
     .product-image {
-      width: 100px;
-      height: 100px;
-      border-radius: 16px;
+      width: 88px;
+      height: 88px;
+      border-radius: 18px;
       overflow: hidden;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
     }
@@ -200,12 +211,11 @@
     }
 
     .details-section {
-      border-radius: 20px;
+      border-radius: 24px;
       background: var(--details-bg, rgba(16, 16, 20, 0.75));
       backdrop-filter: blur(30px);
-      border: 1px solid var(--border);
       box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
-      padding: 20px;
+      padding: 18px;
       position: relative;
     }
 
@@ -215,7 +225,7 @@
       inset: 0;
       background: linear-gradient(135deg, var(--details-gradient-1, rgba(99, 102, 241, 0.08)), transparent, var(--details-gradient-2, rgba(168, 85, 247, 0.08)));
       pointer-events: none;
-      border-radius: 20px;
+      border-radius: 24px;
     }
 
     .details-header {
@@ -420,28 +430,31 @@
       if (navigator.vibrate) navigator.vibrate(5);
     }
 
-    // قراءة اسم الملف من URL ?file=restaurant_Ecuadoor.json
-const params = new URLSearchParams(window.location.search);
-const jsonFile = params.get("file") || "restaurant_1.json"; // القيمة الافتراضية لو مفيش file
+    const params = new URLSearchParams(window.location.search);
+    const r = params.get("r") || "1";
 
-fetch(jsonFile)
-  .then(res => {
-    if (!res.ok) throw new Error('Restaurant not found');
-    return res.json();
-  })
-  .then(data => {
-    console.log('Loaded:', data);
-    loadRestaurant(data);
-  })
-  .catch(err => {
-    console.error(err);
-    alert('Restaurant not found!');
-  });
+  let restaurant, catSwiper, prodSwiper, currentCatIndex = 0;
+  const catWrapper = document.getElementById('catWrapper');
+  const prodWrapper = document.getElementById('prodWrapper');
 
-
-    let restaurant, catSwiper, prodSwiper, currentCatIndex = 0;
-    const catWrapper = document.getElementById('catWrapper');
-    const prodWrapper = document.getElementById('prodWrapper');
+    function adjustLayout() {
+      const header = document.querySelector('.header');
+      const categories = document.querySelector('.categories');
+      const details = document.querySelector('.details-section');
+      const products = document.querySelector('.products');
+      const appEl = document.querySelector('.app');
+      const h = window.innerHeight;
+      const headerH = header ? header.getBoundingClientRect().height : 0;
+      const catH = categories ? categories.getBoundingClientRect().height : 0;
+      const detailsH = details ? details.getBoundingClientRect().height : 0;
+      const topPad = appEl ? parseFloat(getComputedStyle(appEl).paddingTop) : 0;
+      const bottomPad = appEl ? parseFloat(getComputedStyle(appEl).paddingBottom) : 0;
+      const space = 8;
+      let target = h - headerH - catH - detailsH - topPad - bottomPad - space;
+      if (!isFinite(target)) target = 380;
+      target = Math.max(280, Math.min(420, target));
+      if (products) products.style.height = target + 'px';
+    }
 
     function createCat(cat) {
       const slide = document.createElement('div');
@@ -480,6 +493,7 @@ fetch(jsonFile)
         tag.textContent = i;
         list.appendChild(tag);
       });
+      adjustLayout();
     }
 
     function loadRestaurant(data) {
@@ -517,14 +531,27 @@ fetch(jsonFile)
         centeredSlides: true,
         spaceBetween: 20,
         loop: true,
-        speed: 600,
+        slidesPerGroup: 1,
+        slideToClickedSlide: true,
+        followFinger: false,
+        threshold: 6,
+        longSwipes: true,
+        longSwipesRatio: 0.1,
+        longSwipesMs: 80,
+        speed: 500,
         grabCursor: true,
         on: { 
           slideChange() { 
             currentCatIndex = this.realIndex ?? this.activeIndex ?? 0;
             playFeedback();
             loadCategory(); 
-          } 
+          },
+          slideChangeTransitionStart() {
+            const cur = this.realIndex ?? this.activeIndex ?? 0;
+            const prev = this.previousRealIndex ?? this.previousIndex ?? cur;
+            if (cur - prev > 1) this.slideToLoop(prev + 1, this.params.speed);
+            else if (prev - cur > 1) this.slideToLoop(prev - 1, this.params.speed);
+          }
         }
       });
 
@@ -538,22 +565,43 @@ fetch(jsonFile)
           direction: 'vertical',
           slidesPerView: 3,
           centeredSlides: true,
-          spaceBetween: 34,
+          spaceBetween: 22,
           loop: cat.products.length >= 4,
-          speed: 600,
+          slidesPerGroup: 1,
+          slideToClickedSlide: true,
+          followFinger: false,
+          threshold: 6,
+          longSwipes: true,
+          longSwipesRatio: 0.1,
+          longSwipesMs: 80,
+          speed: 500,
           grabCursor: true,
           on: {
             slideChange() {
               const idx = this.realIndex ?? this.activeIndex ?? 0;
               playFeedback();
               updateDetails(cat.products[idx]);
+            },
+            slideChangeTransitionStart() {
+              const cur = this.realIndex ?? this.activeIndex ?? 0;
+              const prev = this.previousRealIndex ?? this.previousIndex ?? cur;
+              if (cur - prev > 1) this.slideToLoop(prev + 1, this.params.speed);
+              else if (prev - cur > 1) this.slideToLoop(prev - 1, this.params.speed);
             }
           }
         });
+        adjustLayout();
       }
 
       loadCategory();
       updateDetails(restaurant.categories[0].products[0]);
+      adjustLayout();
+      if ('ResizeObserver' in window) {
+        const ro = new ResizeObserver(() => adjustLayout());
+        const detailsEl = document.querySelector('.details-section');
+        if (detailsEl) ro.observe(detailsEl);
+      }
+      window.addEventListener('resize', adjustLayout);
     }
 
     fetch(`restaurant_${r}.json`)
