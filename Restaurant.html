@@ -17,7 +17,8 @@
     * {
       margin: 0;
       padding: 0;
-      box-sizing: border-box
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
     }
 
     body {
@@ -25,6 +26,7 @@
       background: var(--bg);
       color: var(--text);
       min-height: 100vh;
+      touch-action: pan-y;
     }
 
     body::before {
@@ -101,7 +103,8 @@
       flex-direction: column;
       align-items: center;
       gap: 8px;
-      transition: all .4s;
+      transition: transform 0.15s ease-out, opacity 0.15s ease-out, filter 0.15s ease-out;
+      will-change: transform, opacity;
     }
 
     .cat-emoji {
@@ -116,14 +119,15 @@
     }
 
     .swiper-slide:not(.swiper-slide-active) .cat-card {
-      opacity: 0.3;
-      filter: blur(3px);
-      transform: scale(0.85);
+      opacity: 0.5;
+      filter: blur(0.5px);
+      transform: scale(0.9);
     }
 
     .swiper-slide-active .cat-card {
       opacity: 1;
-      transform: scale(1.15);
+      filter: blur(0);
+      transform: scale(1.1);
     }
 
     .products {
@@ -153,7 +157,10 @@
       align-items: center;
       padding: 12px 12px;
       border-radius: 22px;
-      transition: all .45s;
+      transition: transform 0.12s ease-out, opacity 0.12s ease-out, filter 0.12s ease-out, background 0.12s ease-out;
+      will-change: transform, opacity;
+      transform: translateZ(0);
+      backface-visibility: hidden;
     }
 
     .product-image {
@@ -168,7 +175,9 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: transform .5s;
+      transition: transform 0.12s ease-out;
+      will-change: transform;
+      transform: translateZ(0);
     }
 
     .product-name {
@@ -195,19 +204,20 @@
     }
 
     .swiper-slide:not(.swiper-slide-active) .product-card {
-      opacity: 0.25;
-      filter: blur(5px) brightness(0.5);
-      transform: scale(0.88);
+      opacity: 0.45;
+      filter: blur(1px) brightness(0.7);
+      transform: scale(0.92) translateZ(0);
     }
 
     .swiper-slide-active .product-card {
       background: rgba(255, 255, 255, 0.09);
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.95), 0 0 0 1px rgba(255, 255, 255, 0.1);
-      transform: scale(1);
+      transform: scale(1) translateZ(0);
+      filter: blur(0);
     }
 
     .swiper-slide-active .product-image img {
-      transform: scale(1.2);
+      transform: scale(1.15) translateZ(0);
     }
 
     .details-section {
@@ -319,39 +329,6 @@
       border-radius: 10px;
       font-size: 12px;
     }
-
-    .details-actions {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      margin-top: 26px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .btn-icon {
-      width: 62px;
-      height: 62px;
-      border-radius: 16px;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 28px;
-      cursor: pointer;
-      transition: .3s;
-    }
-
-    .btn-icon:hover {
-      transform: scale(1.12);
-    }
-
-    .btn-icon.active {
-      background: linear-gradient(135deg, rgba(239, 68, 68, 0.4), rgba(220, 38, 38, 0.4));
-      border-color: #ef4444;
-      color: #ef4444;
-    }
   </style>
 </head>
 <body>
@@ -403,39 +380,42 @@
 
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script>
-    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    let audioContext;
+    
+    function initAudio() {
+      if (!audioContext) {
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      }
+    }
 
     function playFeedback() {
-      const osc1 = audioContext.createOscillator();
-      const osc2 = audioContext.createOscillator();
+      initAudio();
+      const osc = audioContext.createOscillator();
       const gain = audioContext.createGain();
       
-      osc1.connect(gain);
-      osc2.connect(gain);
+      osc.connect(gain);
       gain.connect(audioContext.destination);
       
-      osc1.frequency.value = 1057;
-      osc2.frequency.value = 1245;
-      osc1.type = 'sine';
-      osc2.type = 'sine';
+      osc.frequency.value = 800;
+      osc.type = 'sine';
       
-      gain.gain.setValueAtTime(0.08, audioContext.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.02);
+      gain.gain.setValueAtTime(0.03, audioContext.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.015);
       
-      osc1.start(audioContext.currentTime);
-      osc2.start(audioContext.currentTime);
-      osc1.stop(audioContext.currentTime + 0.02);
-      osc2.stop(audioContext.currentTime + 0.02);
+      osc.start(audioContext.currentTime);
+      osc.stop(audioContext.currentTime + 0.015);
       
-      if (navigator.vibrate) navigator.vibrate(5);
+      if (navigator.vibrate) navigator.vibrate(3);
     }
 
     const params = new URLSearchParams(window.location.search);
     const r = params.get("r") || "1";
 
-  let restaurant, catSwiper, prodSwiper, currentCatIndex = 0;
-  const catWrapper = document.getElementById('catWrapper');
-  const prodWrapper = document.getElementById('prodWrapper');
+    let restaurant, catSwiper, prodSwiper, currentCatIndex = 0;
+    let updateTimeout = null;
+    let isScrolling = false;
+    const catWrapper = document.getElementById('catWrapper');
+    const prodWrapper = document.getElementById('prodWrapper');
 
     function adjustLayout() {
       const header = document.querySelector('.header');
@@ -444,9 +424,9 @@
       const products = document.querySelector('.products');
       const appEl = document.querySelector('.app');
       const h = window.innerHeight;
-      const headerH = header ? header.getBoundingClientRect().height : 0;
-      const catH = categories ? categories.getBoundingClientRect().height : 0;
-      const detailsH = details ? details.getBoundingClientRect().height : 0;
+      const headerH = header?.getBoundingClientRect().height || 0;
+      const catH = categories?.getBoundingClientRect().height || 0;
+      const detailsH = details?.getBoundingClientRect().height || 0;
       const topPad = appEl ? parseFloat(getComputedStyle(appEl).paddingTop) : 0;
       const bottomPad = appEl ? parseFloat(getComputedStyle(appEl).paddingBottom) : 0;
       const space = 8;
@@ -479,6 +459,8 @@
     }
 
     function updateDetails(prod) {
+      if (isScrolling) return;
+      
       document.getElementById('detailsImg').src = prod.image;
       document.getElementById('detailsTitle').textContent = prod.name;
       document.getElementById('detailsPrice').textContent = `$${prod.price.toFixed(2)}`;
@@ -493,7 +475,13 @@
         tag.textContent = i;
         list.appendChild(tag);
       });
-      adjustLayout();
+    }
+
+    function scheduleUpdate(prod) {
+      if (updateTimeout) clearTimeout(updateTimeout);
+      updateTimeout = setTimeout(() => {
+        updateDetails(prod);
+      }, 100);
     }
 
     function loadRestaurant(data) {
@@ -526,27 +514,29 @@
       document.getElementById('restaurantName').textContent = restaurant.name;
 
       restaurant.categories.forEach(createCat);
+      
       catSwiper = new Swiper('#catSwiper', {
         slidesPerView: 5,
         centeredSlides: true,
         spaceBetween: 20,
         loop: true,
-        slidesPerGroup: 1,
-        slideToClickedSlide: true,
-        followFinger: true,
-        threshold: 8,
-        longSwipes: true,
-        longSwipesRatio: 0.15,
-        longSwipesMs: 120,
-        shortSwipes: true,
-        resistanceRatio: 0.65,
-        speed: 450,
+        freeMode: {
+          enabled: true,
+          sticky: true,
+          momentum: true,
+          momentumRatio: 0.25,
+          momentumVelocityRatio: 0.25
+        },
+        speed: 180,
         grabCursor: true,
+        touchRatio: 1.5,
+        threshold: 3,
+        passiveListeners: true,
         on: { 
           slideChange() { 
             currentCatIndex = this.realIndex ?? this.activeIndex ?? 0;
             playFeedback();
-            loadCategory(); 
+            loadCategory();
           }
         }
       });
@@ -557,28 +547,41 @@
         cat.products.forEach(createProd);
 
         if (prodSwiper) prodSwiper.destroy(true, true);
+        
         prodSwiper = new Swiper('#prodSwiper', {
           direction: 'vertical',
           slidesPerView: 3,
           centeredSlides: true,
           spaceBetween: 22,
           loop: cat.products.length >= 4,
-          slidesPerGroup: 1,
-          slideToClickedSlide: true,
-          followFinger: true,
-          threshold: 8,
-          longSwipes: true,
-          longSwipesRatio: 0.15,
-          longSwipesMs: 120,
-          shortSwipes: true,
-          resistanceRatio: 0.65,
-          speed: 450,
+          freeMode: {
+            enabled: true,
+            sticky: true,
+            momentum: true,
+            momentumRatio: 0.25,
+            momentumVelocityRatio: 0.25,
+            minimumVelocity: 0.02
+          },
+          speed: 180,
           grabCursor: true,
+          touchRatio: 1.5,
+          threshold: 3,
+          passiveListeners: true,
           on: {
+            touchStart() {
+              isScrolling = true;
+            },
+            touchEnd() {
+              setTimeout(() => {
+                isScrolling = false;
+                const idx = this.realIndex ?? this.activeIndex ?? 0;
+                updateDetails(cat.products[idx]);
+              }, 150);
+            },
             slideChange() {
               const idx = this.realIndex ?? this.activeIndex ?? 0;
               playFeedback();
-              updateDetails(cat.products[idx]);
+              scheduleUpdate(cat.products[idx]);
             }
           }
         });
@@ -588,12 +591,15 @@
       loadCategory();
       updateDetails(restaurant.categories[0].products[0]);
       adjustLayout();
+      
       if ('ResizeObserver' in window) {
         const ro = new ResizeObserver(() => adjustLayout());
         const detailsEl = document.querySelector('.details-section');
         if (detailsEl) ro.observe(detailsEl);
       }
-      window.addEventListener('resize', adjustLayout);
+      window.addEventListener('resize', adjustLayout, { passive: true });
+      
+      document.addEventListener('touchstart', initAudio, { once: true, passive: true });
     }
 
     fetch(`restaurant_${r}.json`)
@@ -601,10 +607,7 @@
         if (!res.ok) throw new Error('Restaurant not found');
         return res.json();
       })
-      .then(data => {
-        console.log('Loaded:', data);
-        loadRestaurant(data);
-      })
+      .then(loadRestaurant)
       .catch(err => {
         console.error(err);
         alert('Restaurant not found!');
