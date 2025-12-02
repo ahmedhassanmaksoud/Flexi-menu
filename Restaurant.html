@@ -533,24 +533,20 @@
         loop: true,
         slidesPerGroup: 1,
         slideToClickedSlide: true,
-        followFinger: false,
-        threshold: 6,
+        followFinger: true,
+        threshold: 8,
         longSwipes: true,
-        longSwipesRatio: 0.1,
-        longSwipesMs: 80,
-        speed: 500,
+        longSwipesRatio: 0.15,
+        longSwipesMs: 120,
+        shortSwipes: true,
+        resistanceRatio: 0.65,
+        speed: 450,
         grabCursor: true,
         on: { 
           slideChange() { 
             currentCatIndex = this.realIndex ?? this.activeIndex ?? 0;
             playFeedback();
             loadCategory(); 
-          },
-          slideChangeTransitionStart() {
-            const cur = this.realIndex ?? this.activeIndex ?? 0;
-            const prev = this.previousRealIndex ?? this.previousIndex ?? cur;
-            if (cur - prev > 1) this.slideToLoop(prev + 1, this.params.speed);
-            else if (prev - cur > 1) this.slideToLoop(prev - 1, this.params.speed);
           }
         }
       });
@@ -569,24 +565,20 @@
           loop: cat.products.length >= 4,
           slidesPerGroup: 1,
           slideToClickedSlide: true,
-          followFinger: false,
-          threshold: 6,
+          followFinger: true,
+          threshold: 8,
           longSwipes: true,
-          longSwipesRatio: 0.1,
-          longSwipesMs: 80,
-          speed: 500,
+          longSwipesRatio: 0.15,
+          longSwipesMs: 120,
+          shortSwipes: true,
+          resistanceRatio: 0.65,
+          speed: 450,
           grabCursor: true,
           on: {
             slideChange() {
               const idx = this.realIndex ?? this.activeIndex ?? 0;
               playFeedback();
               updateDetails(cat.products[idx]);
-            },
-            slideChangeTransitionStart() {
-              const cur = this.realIndex ?? this.activeIndex ?? 0;
-              const prev = this.previousRealIndex ?? this.previousIndex ?? cur;
-              if (cur - prev > 1) this.slideToLoop(prev + 1, this.params.speed);
-              else if (prev - cur > 1) this.slideToLoop(prev - 1, this.params.speed);
             }
           }
         });
