@@ -113,8 +113,11 @@
       will-change: transform, opacity;
     }
 
-    .cat-emoji {
-      font-size: 38px;
+    .cat-icon {
+      width: 48px;
+      height: 48px;
+      object-fit: contain;
+      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.3));
     }
 
     .cat-name {
@@ -130,10 +133,18 @@
       transform: scale(0.9);
     }
 
+    .swiper-slide:not(.swiper-slide-active) .cat-icon {
+      filter: brightness(0.7) drop-shadow(0 4px 12px rgba(0,0,0,0.3));
+    }
+
     .swiper-slide-active .cat-card {
       opacity: 1;
       filter: blur(0);
       transform: scale(1.1);
+    }
+
+    .swiper-slide-active .cat-icon {
+      filter: brightness(1.2) drop-shadow(0 6px 16px rgba(0,0,0,0.4));
     }
 
     .products {
@@ -159,10 +170,10 @@
 
     .product-card {
       display: flex;
-      gap: 14px;
+      gap: 10px;
       align-items: center;
-      padding: 12px 12px;
-      border-radius: 22px;
+      padding: 8px 10px;
+      border-radius: 20px;
       transition: transform 0.12s ease-out, opacity 0.12s ease-out, filter 0.12s ease-out, background 0.12s ease-out;
       will-change: transform, opacity;
       transform: translateZ(0);
@@ -170,9 +181,9 @@
     }
 
     .product-image {
-      width: 88px;
-      height: 88px;
-      border-radius: 18px;
+      width: 72px;
+      height: 72px;
+      border-radius: 16px;
       overflow: hidden;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
     }
@@ -187,14 +198,14 @@
     }
 
     .product-name {
-      font-size: 16px;
+      font-size: 14px;
       font-weight: 800;
     }
 
     .product-desc {
-      font-size: 13px;
+      font-size: 12px;
       color: var(--text-dim);
-      line-height: 1.4;
+      line-height: 1.3;
       -webkit-line-clamp: 2;
       display: -webkit-box;
       -webkit-box-orient: vertical;
@@ -202,7 +213,7 @@
     }
 
     .product-price {
-      font-size: 19px;
+      font-size: 17px;
       font-weight: 900;
       background: linear-gradient(135deg, var(--gold), #f59e0b);
       -webkit-background-clip: text;
@@ -326,10 +337,17 @@
       gap: 10px;
       position: relative;
       z-index: 1;
+      --ing-row-h: 28px;
+      --ing-gap: 10px;
+      height: calc(var(--ing-row-h) * 2 + var(--ing-gap));
+      overflow: hidden;
     }
 
     .ingredient-tag {
-      padding: 8px 14px;
+      display: inline-flex;
+      align-items: center;
+      height: 28px;
+      padding: 0 12px;
       background: rgba(255, 255, 255, 0.06);
       border: 1px solid rgba(255, 255, 255, 0.12);
       border-radius: 10px;
@@ -355,8 +373,9 @@
         font-size: 15px;
       }
 
-      .cat-emoji {
-        font-size: 32px;
+      .cat-icon {
+        width: 40px;
+        height: 40px;
       }
 
       .details-image {
@@ -376,10 +395,8 @@
         font-size: 12px;
       }
 
-      .ingredient-tag {
-        font-size: 11px;
-        padding: 6px 10px;
-      }
+      .ingredients-list { --ing-row-h: 24px; --ing-gap: 8px; gap: 8px; }
+      .ingredient-tag { font-size: 11px; height: 24px; padding: 0 10px; }
     }
   </style>
 </head>
@@ -451,7 +468,6 @@
       if (nowTime - lastFeedback < 120) return;
       lastFeedback = nowTime;
 
-      // ────── الصوت (موجود أصلًا) ──────
       const osc = audioContext.createOscillator();
       const gain = audioContext.createGain();
       const filter = audioContext.createBiquadFilter();
@@ -473,11 +489,8 @@
       osc.start();
       osc.stop(audioContext.currentTime + 0.14);
 
-      // ────── الاهتزاز الجديد (Vibration) ──────
       if ('vibrate' in navigator) {
-        navigator.vibrate([30, 20, 40]); // نمط اهتزاز قصير وحلو
-        // أو
-        navigator.vibrate(60); // اهتزاز بسيط 60 مللي ثانية
+        navigator.vibrate(60);
       }
     }
 
@@ -512,7 +525,7 @@
     function createCat(cat) {
       const slide = document.createElement('div');
       slide.className = 'swiper-slide';
-      slide.innerHTML = `<div class="cat-card"><div class="cat-emoji">${cat.emoji}</div><div class="cat-name">${cat.name}</div></div>`;
+      slide.innerHTML = `<div class="cat-card"><img src="${cat.icon}" alt="${cat.name}" class="cat-icon"><div class="cat-name">${cat.name}</div></div>`;
       catWrapper.appendChild(slide);
     }
 
