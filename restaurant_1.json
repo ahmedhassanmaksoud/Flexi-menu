@@ -20,7 +20,7 @@
     {
       "id": "breakfast",
       "name": "Breakfast",
-      "emoji": "🍳",
+      "icon": "https://cdn-icons-png.flaticon.com/512/3480/3480822.png",
       "products": [
         {"id":1,"name":"Eggs Benedict","description":"Poached eggs on English muffin with hollandaise","price":12.50,"image":"https://images.unsplash.com/photo-1608039829572-78524f79c4c7?w=400","calories":"520 kcal","time":"15 min","rating":4.9,"ingredients":["Eggs","English Muffin","Hollandaise","Canadian Bacon"]},
         {"id":2,"name":"Avocado Toast","description":"Smashed avocado on sourdough with cherry tomatoes","price":10.00,"image":"https://images.unsplash.com/photo-1541519227354-08fa5d50c44d?w=400","calories":"380 kcal","time":"8 min","rating":4.7,"ingredients":["Avocado","Sourdough","Cherry Tomatoes","Feta"]},
@@ -32,7 +32,7 @@
     {
       "id": "coffee",
       "name": "Coffee",
-      "emoji": "☕",
+      "icon": "https://cdn-icons-png.flaticon.com/512/924/924514.png",
       "products": [
         {"id":11,"name":"Espresso","description":"Single origin Ethiopian dark roast","price":3.50,"image":"https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=400","calories":"5 kcal","time":"2 min","rating":4.9,"ingredients":["Ethiopian Beans","Water"]},
         {"id":12,"name":"Cappuccino","description":"Double espresso with steamed milk foam","price":4.50,"image":"https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=400","calories":"120 kcal","time":"4 min","rating":4.8,"ingredients":["Espresso","Milk","Foam"]},
@@ -44,7 +44,7 @@
     {
       "id": "appetizers",
       "name": "Appetizers",
-      "emoji": "🥗",
+      "icon": "https://cdn-icons-png.flaticon.com/512/1046/1046784.png",
       "products": [
         {"id":21,"name":"Caesar Salad","description":"Crisp romaine with parmesan and croutons","price":8.50,"image":"https://images.unsplash.com/photo-1546793665-c74683f339c1?w=400","calories":"280 kcal","time":"8 min","rating":4.7,"ingredients":["Romaine","Parmesan","Croutons","Caesar Dressing"]},
         {"id":22,"name":"Caprese Salad","description":"Fresh mozzarella, tomatoes and basil","price":9.00,"image":"https://images.unsplash.com/photo-1592417817098-8fd3d9eb14a5?w=400","calories":"220 kcal","time":"5 min","rating":4.8,"ingredients":["Mozzarella","Tomatoes","Basil","Olive Oil"]},
@@ -56,7 +56,7 @@
     {
       "id": "mains",
       "name": "Mains",
-      "emoji": "🍖",
+      "icon": "https://cdn-icons-png.flaticon.com/512/1046/1046769.png",
       "products": [
         {"id":31,"name":"Grilled Salmon","description":"Atlantic salmon with asparagus and lemon butter","price":22.00,"image":"https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=400","calories":"520 kcal","time":"20 min","rating":4.9,"ingredients":["Salmon","Asparagus","Lemon","Butter"]},
         {"id":32,"name":"Ribeye Steak","description":"12oz prime ribeye with mashed potatoes","price":32.00,"image":"https://images.unsplash.com/photo-1600891964092-4316c288032e?w=400","calories":"780 kcal","time":"25 min","rating":4.8,"ingredients":["Ribeye","Potatoes","Garlic","Butter"]},
@@ -68,7 +68,7 @@
     {
       "id": "pizza",
       "name": "Pizza",
-      "emoji": "🍕",
+      "icon": "https://cdn-icons-png.flaticon.com/512/3132/3132691.png",
       "products": [
         {"id":41,"name":"Margherita","description":"San Marzano tomatoes, mozzarella and basil","price":14.00,"image":"https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=400","calories":"620 kcal","time":"15 min","rating":4.8,"ingredients":["Tomato","Mozzarella","Basil","Olive Oil"]},
         {"id":42,"name":"Pepperoni","description":"Double pepperoni with extra cheese","price":16.00,"image":"https://images.unsplash.com/photo-1628840042765-356cda07504e?w=400","calories":"740 kcal","time":"15 min","rating":4.9,"ingredients":["Tomato","Mozzarella","Pepperoni"]},
@@ -80,7 +80,7 @@
     {
       "id": "burgers",
       "name": "Burgers",
-      "emoji": "🍔",
+      "icon": "https://cdn-icons-png.flaticon.com/512/1046/1046751.png",
       "products": [
         {"id":51,"name":"Classic Burger","description":"Angus beef with lettuce and special sauce","price":13.50,"image":"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400","calories":"680 kcal","time":"15 min","rating":4.8,"ingredients":["Angus Beef","Lettuce","Tomato","Sauce"]},
         {"id":52,"name":"Bacon Cheese","description":"Double patty with bacon and cheddar","price":15.50,"image":"https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=400","calories":"840 kcal","time":"18 min","rating":4.9,"ingredients":["Beef","Bacon","Cheddar","Onions"]},
@@ -92,7 +92,7 @@
     {
       "id": "seafood",
       "name": "Seafood",
-      "emoji": "🦞",
+      "icon": "https://cdn-icons-png.flaticon.com/512/2718/2718024.png",
       "products": [
         {"id":61,"name":"Lobster Tail","description":"Grilled lobster with garlic butter","price":38.00,"image":"https://images.unsplash.com/photo-1625938145312-559ce5656dd6?w=400","calories":"420 kcal","time":"20 min","rating":4.9,"ingredients":["Lobster","Butter","Garlic","Lemon"]},
         {"id":62,"name":"Shrimp Scampi","description":"Jumbo shrimp in white wine sauce","price":24.00,"image":"https://images.unsplash.com/photo-1633504581786-316c8002b1b9?w=400","calories":"380 kcal","time":"18 min","rating":4.8,"ingredients":["Shrimp","White Wine","Garlic","Pasta"]},
@@ -104,7 +104,7 @@
     {
       "id": "pasta",
       "name": "Pasta",
-      "emoji": "🍝",
+      "icon": "https://cdn-icons-png.flaticon.com/512/2718/2718896.png",
       "products": [
         {"id":71,"name":"Spaghetti Bolognese","description":"Traditional meat sauce with parmesan","price":15.50,"image":"https://images.unsplash.com/photo-1551183053-bf91a1d81141?w=400","calories":"680 kcal","time":"20 min","rating":4.8,"ingredients":["Spaghetti","Beef","Tomato","Parmesan"]},
         {"id":72,"name":"Fettuccine Alfredo","description":"Creamy parmesan sauce with butter","price":14.50,"image":"https://images.unsplash.com/photo-1645112411341-6c4fd023714a?w=400","calories":"740 kcal","time":"15 min","rating":4.7,"ingredients":["Fettuccine","Cream","Parmesan","Butter"]},
@@ -116,7 +116,7 @@
     {
       "id": "asian",
       "name": "Asian",
-      "emoji": "🍜",
+      "icon": "https://cdn-icons-png.flaticon.com/512/2718/2718898.png",
       "products": [
         {"id":81,"name":"Pad Thai","description":"Thai stir-fried noodles with shrimp","price":14.50,"image":"https://images.unsplash.com/photo-1559314809-0d155014e29e?w=400","calories":"580 kcal","time":"15 min","rating":4.8,"ingredients":["Rice Noodles","Shrimp","Peanuts","Tamarind"]},
         {"id":82,"name":"Ramen Bowl","description":"Japanese noodles in pork broth","price":13.50,"image":"https://images.unsplash.com/photo-1557872943-16a5ac26437e?w=400","calories":"620 kcal","time":"20 min","rating":4.9,"ingredients":["Noodles","Pork","Egg","Broth"]},
@@ -128,7 +128,7 @@
     {
       "id": "desserts",
       "name": "Desserts",
-      "emoji": "🍰",
+      "icon": "https://cdn-icons-png.flaticon.com/512/3050/3050156.png",
       "products": [
         {"id":91,"name":"Tiramisu","description":"Classic Italian with mascarpone","price":7.50,"image":"https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=400","calories":"380 kcal","time":"5 min","rating":4.9,"ingredients":["Mascarpone","Espresso","Ladyfingers","Cocoa"]},
         {"id":92,"name":"Lava Cake","description":"Warm chocolate with molten center","price":8.00,"image":"https://images.unsplash.com/photo-1624353365286-3f8d62daad51?w=400","calories":"520 kcal","time":"12 min","rating":4.8,"ingredients":["Chocolate","Butter","Eggs","Sugar"]},
@@ -140,7 +140,7 @@
     {
       "id": "drinks",
       "name": "Drinks",
-      "emoji": "🧃",
+      "icon": "https://cdn-icons-png.flaticon.com/512/2405/2405479.png",
       "products": [
         {"id":101,"name":"Orange Juice","description":"Freshly squeezed Valencia oranges","price":5.50,"image":"https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=400","calories":"110 kcal","time":"3 min","rating":4.8,"ingredients":["Fresh Oranges"]},
         {"id":102,"name":"Green Smoothie","description":"Spinach, banana and mango","price":6.50,"image":"https://images.unsplash.com/photo-1505252585461-04db1eb84625?w=400","calories":"180 kcal","time":"4 min","rating":4.7,"ingredients":["Spinach","Banana","Mango"]},
