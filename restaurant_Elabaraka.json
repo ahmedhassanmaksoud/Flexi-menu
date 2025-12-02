@@ -1,0 +1,153 @@
+{
+  "name": "Luxe Bistro",
+  "logo": "🍽️",
+  "theme": {
+    "bg": "#1a0000",
+    "text": "#ffcccc",
+    "textDim": "#ff8888",
+    "gold": "#ff4444",
+    "border": "rgba(255, 68, 68, 0.3)",
+    "gradientStart": "rgba(255, 0, 0, 0.15)",
+    "gradientEnd": "rgba(255, 0, 0, 0.12)",
+    "detailsGradient1": "rgba(255, 0, 0, 0.08)",
+    "detailsGradient2": "rgba(255, 0, 0, 0.08)",
+    "productsBackground": "rgba(50, 0, 0, 0.6)",
+    "headerBackground": "rgba(50, 0, 0, 0.95)",
+    "detailsBackground": "rgba(50, 0, 0, 0.75)",
+    "font": "Inter"
+  },
+  "categories": [
+    {
+      "id": "breakfast",
+      "name": "Breakfast",
+      "emoji": "🍳",
+      "products": [
+        {"id":1,"name":"Eggs Benedict","description":"Poached eggs on English muffin with hollandaise","price":12.50,"image":"https://images.unsplash.com/photo-1608039829572-78524f79c4c7?w=400","calories":"520 kcal","time":"15 min","rating":4.9,"ingredients":["Eggs","English Muffin","Hollandaise","Canadian Bacon"]},
+        {"id":2,"name":"Avocado Toast","description":"Smashed avocado on sourdough with cherry tomatoes","price":10.00,"image":"https://images.unsplash.com/photo-1541519227354-08fa5d50c44d?w=400","calories":"380 kcal","time":"8 min","rating":4.7,"ingredients":["Avocado","Sourdough","Cherry Tomatoes","Feta"]},
+        {"id":3,"name":"Pancake Stack","description":"Fluffy buttermilk pancakes with maple syrup","price":11.00,"image":"https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=400","calories":"640 kcal","time":"12 min","rating":4.8,"ingredients":["Flour","Buttermilk","Eggs","Maple Syrup"]},
+        {"id":4,"name":"French Toast","description":"Brioche bread with caramelized bananas","price":11.50,"image":"https://images.unsplash.com/photo-1484723091739-30a097e8f929?w=400","calories":"580 kcal","time":"10 min","rating":4.6,"ingredients":["Brioche","Eggs","Cinnamon","Bananas"]},
+        {"id":5,"name":"Greek Yogurt Bowl","description":"Greek yogurt with honey, granola and berries","price":9.00,"image":"https://images.unsplash.com/photo-1488477181946-6428a0291777?w=400","calories":"320 kcal","time":"5 min","rating":4.5,"ingredients":["Greek Yogurt","Honey","Granola","Mixed Berries"]}
+      ]
+    },
+    {
+      "id": "coffee",
+      "name": "Coffee",
+      "emoji": "☕",
+      "products": [
+        {"id":11,"name":"Espresso","description":"Single origin Ethiopian dark roast","price":3.50,"image":"https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=400","calories":"5 kcal","time":"2 min","rating":4.9,"ingredients":["Ethiopian Beans","Water"]},
+        {"id":12,"name":"Cappuccino","description":"Double espresso with steamed milk foam","price":4.50,"image":"https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=400","calories":"120 kcal","time":"4 min","rating":4.8,"ingredients":["Espresso","Milk","Foam"]},
+        {"id":13,"name":"Flat White","description":"Smooth microfoam with double ristretto","price":4.80,"image":"https://images.unsplash.com/photo-1542990253-a781e04c0082?w=400","calories":"140 kcal","time":"5 min","rating":4.9,"ingredients":["Ristretto","Microfoam"]},
+        {"id":14,"name":"Cold Brew","description":"16-hour cold extraction with ice","price":5.00,"image":"https://images.unsplash.com/photo-1517487881594-2787fef5ebf7?w=400","calories":"5 kcal","time":"1 min","rating":4.7,"ingredients":["Cold Brew","Ice"]},
+        {"id":15,"name":"Mocha","description":"Espresso with chocolate and whipped cream","price":5.50,"image":"https://images.unsplash.com/photo-1607260550778-aa5c8d210876?w=400","calories":"350 kcal","time":"5 min","rating":4.6,"ingredients":["Espresso","Chocolate","Cream"]}
+      ]
+    },
+    {
+      "id": "appetizers",
+      "name": "Appetizers",
+      "emoji": "🥗",
+      "products": [
+        {"id":21,"name":"Caesar Salad","description":"Crisp romaine with parmesan and croutons","price":8.50,"image":"https://images.unsplash.com/photo-1546793665-c74683f339c1?w=400","calories":"280 kcal","time":"8 min","rating":4.7,"ingredients":["Romaine","Parmesan","Croutons","Caesar Dressing"]},
+        {"id":22,"name":"Caprese Salad","description":"Fresh mozzarella, tomatoes and basil","price":9.00,"image":"https://images.unsplash.com/photo-1592417817098-8fd3d9eb14a5?w=400","calories":"220 kcal","time":"5 min","rating":4.8,"ingredients":["Mozzarella","Tomatoes","Basil","Olive Oil"]},
+        {"id":23,"name":"Bruschetta","description":"Toasted bread with tomato and garlic","price":7.50,"image":"https://images.unsplash.com/photo-1572695157366-5e585ab2b69f?w=400","calories":"180 kcal","time":"10 min","rating":4.6,"ingredients":["Baguette","Tomatoes","Garlic","Basil"]},
+        {"id":24,"name":"Calamari","description":"Crispy fried squid with lemon aioli","price":11.00,"image":"https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=400","calories":"420 kcal","time":"12 min","rating":4.9,"ingredients":["Squid","Flour","Lemon","Aioli"]},
+        {"id":25,"name":"Soup of Day","description":"Chef's special homemade soup","price":6.50,"image":"https://images.unsplash.com/photo-1547592166-23ac45744acd?w=400","calories":"180 kcal","time":"5 min","rating":4.5,"ingredients":["Vegetables","Broth","Herbs"]}
+      ]
+    },
+    {
+      "id": "mains",
+      "name": "Mains",
+      "emoji": "🍖",
+      "products": [
+        {"id":31,"name":"Grilled Salmon","description":"Atlantic salmon with asparagus and lemon butter","price":22.00,"image":"https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=400","calories":"520 kcal","time":"20 min","rating":4.9,"ingredients":["Salmon","Asparagus","Lemon","Butter"]},
+        {"id":32,"name":"Ribeye Steak","description":"12oz prime ribeye with mashed potatoes","price":32.00,"image":"https://images.unsplash.com/photo-1600891964092-4316c288032e?w=400","calories":"780 kcal","time":"25 min","rating":4.8,"ingredients":["Ribeye","Potatoes","Garlic","Butter"]},
+        {"id":33,"name":"Chicken Parmesan","description":"Breaded chicken with marinara and mozzarella","price":18.50,"image":"https://images.unsplash.com/photo-1632778149955-e80f8ceca2e8?w=400","calories":"640 kcal","time":"22 min","rating":4.7,"ingredients":["Chicken","Marinara","Mozzarella","Parmesan"]},
+        {"id":34,"name":"Pasta Carbonara","description":"Spaghetti with pancetta, egg and pecorino","price":16.00,"image":"https://images.unsplash.com/photo-1612874742237-6526221588e3?w=400","calories":"720 kcal","time":"18 min","rating":4.9,"ingredients":["Spaghetti","Pancetta","Eggs","Pecorino"]},
+        {"id":35,"name":"Vegetable Curry","description":"Mixed vegetables in coconut curry sauce","price":15.00,"image":"https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=400","calories":"420 kcal","time":"20 min","rating":4.6,"ingredients":["Vegetables","Coconut Milk","Curry","Rice"]}
+      ]
+    },
+    {
+      "id": "pizza",
+      "name": "Pizza",
+      "emoji": "🍕",
+      "products": [
+        {"id":41,"name":"Margherita","description":"San Marzano tomatoes, mozzarella and basil","price":14.00,"image":"https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=400","calories":"620 kcal","time":"15 min","rating":4.8,"ingredients":["Tomato","Mozzarella","Basil","Olive Oil"]},
+        {"id":42,"name":"Pepperoni","description":"Double pepperoni with extra cheese","price":16.00,"image":"https://images.unsplash.com/photo-1628840042765-356cda07504e?w=400","calories":"740 kcal","time":"15 min","rating":4.9,"ingredients":["Tomato","Mozzarella","Pepperoni"]},
+        {"id":43,"name":"Quattro Formaggi","description":"Four cheese blend on white sauce","price":17.00,"image":"https://images.unsplash.com/photo-1571407970349-bc81e7e96c47?w=400","calories":"820 kcal","time":"15 min","rating":4.7,"ingredients":["Mozzarella","Gorgonzola","Parmesan","Fontina"]},
+        {"id":44,"name":"Prosciutto","description":"Prosciutto, arugula and parmesan","price":18.50,"image":"https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400","calories":"680 kcal","time":"15 min","rating":4.8,"ingredients":["Prosciutto","Arugula","Parmesan"]},
+        {"id":45,"name":"Vegetariana","description":"Seasonal grilled vegetables and pesto","price":15.50,"image":"https://images.unsplash.com/photo-1511689660979-10d2b1aada49?w=400","calories":"560 kcal","time":"15 min","rating":4.6,"ingredients":["Peppers","Zucchini","Eggplant","Pesto"]}
+      ]
+    },
+    {
+      "id": "burgers",
+      "name": "Burgers",
+      "emoji": "🍔",
+      "products": [
+        {"id":51,"name":"Classic Burger","description":"Angus beef with lettuce and special sauce","price":13.50,"image":"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400","calories":"680 kcal","time":"15 min","rating":4.8,"ingredients":["Angus Beef","Lettuce","Tomato","Sauce"]},
+        {"id":52,"name":"Bacon Cheese","description":"Double patty with bacon and cheddar","price":15.50,"image":"https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=400","calories":"840 kcal","time":"18 min","rating":4.9,"ingredients":["Beef","Bacon","Cheddar","Onions"]},
+        {"id":53,"name":"Mushroom Swiss","description":"Sautéed mushrooms and Swiss cheese","price":14.50,"image":"https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?w=400","calories":"720 kcal","time":"16 min","rating":4.7,"ingredients":["Beef","Mushrooms","Swiss","Garlic"]},
+        {"id":54,"name":"Chicken Burger","description":"Grilled chicken breast with avocado","price":13.00,"image":"https://images.unsplash.com/photo-1606755962773-d324e0a13086?w=400","calories":"580 kcal","time":"14 min","rating":4.6,"ingredients":["Chicken","Avocado","Lettuce","Mayo"]},
+        {"id":55,"name":"Veggie Burger","description":"Beyond meat with caramelized onions","price":12.50,"image":"https://images.unsplash.com/photo-1520072959219-c595dc870360?w=400","calories":"520 kcal","time":"12 min","rating":4.5,"ingredients":["Beyond Meat","Onions","Lettuce"]}
+      ]
+    },
+    {
+      "id": "seafood",
+      "name": "Seafood",
+      "emoji": "🦞",
+      "products": [
+        {"id":61,"name":"Lobster Tail","description":"Grilled lobster with garlic butter","price":38.00,"image":"https://images.unsplash.com/photo-1625938145312-559ce5656dd6?w=400","calories":"420 kcal","time":"20 min","rating":4.9,"ingredients":["Lobster","Butter","Garlic","Lemon"]},
+        {"id":62,"name":"Shrimp Scampi","description":"Jumbo shrimp in white wine sauce","price":24.00,"image":"https://images.unsplash.com/photo-1633504581786-316c8002b1b9?w=400","calories":"380 kcal","time":"18 min","rating":4.8,"ingredients":["Shrimp","White Wine","Garlic","Pasta"]},
+        {"id":63,"name":"Fish & Chips","description":"Beer battered cod with fries","price":16.50,"image":"https://images.unsplash.com/photo-1579208575657-c595a05383b7?w=400","calories":"720 kcal","time":"15 min","rating":4.7,"ingredients":["Cod","Beer Batter","Fries","Tartar"]},
+        {"id":64,"name":"Tuna Steak","description":"Seared ahi tuna with wasabi","price":26.00,"image":"https://images.unsplash.com/photo-1580959375944-26d5ae364a64?w=400","calories":"340 kcal","time":"12 min","rating":4.9,"ingredients":["Ahi Tuna","Wasabi","Soy","Sesame"]},
+        {"id":65,"name":"Seafood Paella","description":"Spanish rice with mixed seafood","price":28.00,"image":"https://images.unsplash.com/photo-1536504080740-6c2d1c7b0c2f?w=400","calories":"620 kcal","time":"25 min","rating":4.8,"ingredients":["Rice","Shrimp","Mussels","Saffron"]}
+      ]
+    },
+    {
+      "id": "pasta",
+      "name": "Pasta",
+      "emoji": "🍝",
+      "products": [
+        {"id":71,"name":"Spaghetti Bolognese","description":"Traditional meat sauce with parmesan","price":15.50,"image":"https://images.unsplash.com/photo-1551183053-bf91a1d81141?w=400","calories":"680 kcal","time":"20 min","rating":4.8,"ingredients":["Spaghetti","Beef","Tomato","Parmesan"]},
+        {"id":72,"name":"Fettuccine Alfredo","description":"Creamy parmesan sauce with butter","price":14.50,"image":"https://images.unsplash.com/photo-1645112411341-6c4fd023714a?w=400","calories":"740 kcal","time":"15 min","rating":4.7,"ingredients":["Fettuccine","Cream","Parmesan","Butter"]},
+        {"id":73,"name":"Penne Arrabbiata","description":"Spicy tomato sauce with garlic","price":13.50,"image":"https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=400","calories":"520 kcal","time":"12 min","rating":4.6,"ingredients":["Penne","Tomato","Chili","Garlic"]},
+        {"id":74,"name":"Lasagna","description":"Layered pasta with meat and cheese","price":17.00,"image":"https://images.unsplash.com/photo-1574894709920-11b28e7367e3?w=400","calories":"820 kcal","time":"30 min","rating":4.9,"ingredients":["Pasta","Beef","Ricotta","Mozzarella"]},
+        {"id":75,"name":"Ravioli","description":"Spinach and ricotta filled pasta","price":16.00,"image":"https://images.unsplash.com/photo-1587740908075-9e245070dfaa?w=400","calories":"580 kcal","time":"18 min","rating":4.7,"ingredients":["Ravioli","Spinach","Ricotta","Sage"]}
+      ]
+    },
+    {
+      "id": "asian",
+      "name": "Asian",
+      "emoji": "🍜",
+      "products": [
+        {"id":81,"name":"Pad Thai","description":"Thai stir-fried noodles with shrimp","price":14.50,"image":"https://images.unsplash.com/photo-1559314809-0d155014e29e?w=400","calories":"580 kcal","time":"15 min","rating":4.8,"ingredients":["Rice Noodles","Shrimp","Peanuts","Tamarind"]},
+        {"id":82,"name":"Ramen Bowl","description":"Japanese noodles in pork broth","price":13.50,"image":"https://images.unsplash.com/photo-1557872943-16a5ac26437e?w=400","calories":"620 kcal","time":"20 min","rating":4.9,"ingredients":["Noodles","Pork","Egg","Broth"]},
+        {"id":83,"name":"Sushi Platter","description":"Assorted nigiri and rolls","price":22.00,"image":"https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?w=400","calories":"480 kcal","time":"25 min","rating":4.9,"ingredients":["Rice","Fish","Nori","Wasabi"]},
+        {"id":84,"name":"Fried Rice","description":"Wok-fried rice with vegetables","price":11.50,"image":"https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=400","calories":"520 kcal","time":"12 min","rating":4.6,"ingredients":["Rice","Egg","Vegetables","Soy"]},
+        {"id":85,"name":"Spring Rolls","description":"Crispy rolls with sweet chili sauce","price":8.50,"image":"https://images.unsplash.com/photo-1620151318414-0778a08b97a2?w=400","calories":"320 kcal","time":"10 min","rating":4.7,"ingredients":["Wrappers","Vegetables","Vermicelli"]}
+      ]
+    },
+    {
+      "id": "desserts",
+      "name": "Desserts",
+      "emoji": "🍰",
+      "products": [
+        {"id":91,"name":"Tiramisu","description":"Classic Italian with mascarpone","price":7.50,"image":"https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=400","calories":"380 kcal","time":"5 min","rating":4.9,"ingredients":["Mascarpone","Espresso","Ladyfingers","Cocoa"]},
+        {"id":92,"name":"Lava Cake","description":"Warm chocolate with molten center","price":8.00,"image":"https://images.unsplash.com/photo-1624353365286-3f8d62daad51?w=400","calories":"520 kcal","time":"12 min","rating":4.8,"ingredients":["Chocolate","Butter","Eggs","Sugar"]},
+        {"id":93,"name":"Cheesecake","description":"New York style with berries","price":7.00,"image":"https://images.unsplash.com/photo-1533134486753-c833f0ed4866?w=400","calories":"420 kcal","time":"5 min","rating":4.7,"ingredients":["Cream Cheese","Graham","Berries"]},
+        {"id":94,"name":"Crème Brûlée","description":"Vanilla custard with caramelized sugar","price":8.50,"image":"https://images.unsplash.com/photo-1470124182917-cc6e71b22ecc?w=400","calories":"350 kcal","time":"8 min","rating":4.9,"ingredients":["Cream","Vanilla","Egg","Sugar"]},
+        {"id":95,"name":"Apple Pie","description":"Warm pie with vanilla ice cream","price":6.50,"image":"https://images.unsplash.com/photo-1535920527002-b35e96722eb9?w=400","calories":"480 kcal","time":"10 min","rating":4.6,"ingredients":["Apples","Cinnamon","Pastry","Ice Cream"]}
+      ]
+    },
+    {
+      "id": "drinks",
+      "name": "Drinks",
+      "emoji": "🧃",
+      "products": [
+        {"id":101,"name":"Orange Juice","description":"Freshly squeezed Valencia oranges","price":5.50,"image":"https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=400","calories":"110 kcal","time":"3 min","rating":4.8,"ingredients":["Fresh Oranges"]},
+        {"id":102,"name":"Green Smoothie","description":"Spinach, banana and mango","price":6.50,"image":"https://images.unsplash.com/photo-1505252585461-04db1eb84625?w=400","calories":"180 kcal","time":"4 min","rating":4.7,"ingredients":["Spinach","Banana","Mango"]},
+        {"id":103,"name":"Berry Blast","description":"Mixed berries with Greek yogurt","price":6.00,"image":"https://images.unsplash.com/photo-1553530666-ba11a7da3888?w=400","calories":"220 kcal","time":"4 min","rating":4.6,"ingredients":["Berries","Yogurt","Honey"]},
+        {"id":104,"name":"Iced Tea","description":"House-brewed with lemon","price":3.50,"image":"https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=400","calories":"45 kcal","time":"2 min","rating":4.5,"ingredients":["Black Tea","Lemon","Ice"]},
+        {"id":105,"name":"Lemonade","description":"Fresh lemon with mint","price":4.00,"image":"https://images.unsplash.com/photo-1523677011781-c91d1bbe2f0f?w=400","calories":"120 kcal","time":"3 min","rating":4.7,"ingredients":["Lemons","Mint","Sugar"]}
+      ]
+    }
+  ]
+}
