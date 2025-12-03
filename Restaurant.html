@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
   <title>Restaurant Menu</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
   <style>
@@ -19,7 +19,7 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
+      -webkit-tap-highlight-color: transparent
     }
 
     body {
@@ -28,178 +28,184 @@
       color: var(--text);
       min-height: 100vh;
       touch-action: pan-y;
-    }
-
-    html,
-    body {
-      overflow: hidden;
+      overflow: hidden
     }
 
     body::before {
       content: '';
       position: fixed;
       inset: 0;
-      background: radial-gradient(circle at 20% 30%, var(--gradient-start, rgba(99, 102, 241, 0.15)), transparent 50%), radial-gradient(circle at 80% 70%, var(--gradient-end, rgba(168, 85, 247, 0.12)), transparent 50%);
-      pointer-events: none;
+      background: radial-gradient(circle at 20% 30%, rgba(99, 102, 241, 0.15), transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(168, 85, 247, 0.12), transparent 50%);
+      pointer-events: none
     }
 
     .app {
       max-width: 420px;
       margin: 0 auto;
-      padding: 82px 16px 16px;
+      padding: 150px 16px 16px;
+      /* زي ما هو */
       position: relative;
       z-index: 1;
-      border: 1px solid var(--border);
-      border-radius: 28px;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 20px;
+      /* زودنا الـ gap عشان الكاتيجوريز تنزل تحت */
+      height: 100vh;
+      overflow: hidden
     }
 
     .header {
       position: fixed;
-      top: 12px;
+      top: 16px;
       left: 50%;
       transform: translateX(-50%);
       width: calc(100% - 32px);
       max-width: 388px;
       z-index: 100;
-      padding: 14px 18px;
-      border-radius: 22px;
-      background: var(--header-bg, rgba(16, 16, 20, 0.95));
+      padding: 16px 20px;
+      border-radius: 24px;
+      background: rgba(16, 16, 20, 0.98);
       backdrop-filter: blur(40px);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.08);
       display: flex;
+      flex-direction: column;
       align-items: center;
-      gap: 12px;
+      gap: 12px
     }
 
     .header-logo {
-      width: 44px;
-      height: 44px;
-      border-radius: 12px;
+      width: 64px;
+      height: 64px;
+      border-radius: 18px;
       background: linear-gradient(135deg, #6366f1, #a855f7);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 22px;
+      font-size: 32px;
+      box-shadow: 0 8px 24px rgba(99, 102, 241, 0.5), inset 0 0 0 1px rgba(255, 255, 255, 0.1)
     }
 
     .header-title {
-      font-size: 17px;
+      font-size: 22px;
       font-weight: 900;
       background: linear-gradient(135deg, #fff, #ccc);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      letter-spacing: -0.03em;
+      text-align: center
+    }
+
+    .header-subtitle {
+      font-size: 11px;
+      color: #777;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      text-align: center
     }
 
     .categories {
-      margin-bottom: 28px;
+      height: 100px;
       border-radius: 24px;
-      background: var(--products-bg, rgba(16, 16, 20, 0.6));
+      background: rgba(16, 16, 20, 0.6);
       backdrop-filter: blur(20px);
-      padding: 10px 0;
+      padding: 12px 0;
       overflow: hidden;
-      z-index: 1;
+      position: relative;
+      perspective: 1000px;
+      margin-top: 12px;
+      /* مسافة إضافية تحت الهيدر */
+    }
+
+    .categories .swiper {
+      height: 100%;
+      overflow: hidden
+    }
+
+    .categories .swiper-wrapper {
+      transform-style: preserve-3d
     }
 
     .cat-card {
-      padding: 12px 18px;
+      padding: 8px 12px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 8px;
-      transition: transform 0.15s ease-out, opacity 0.15s ease-out, filter 0.15s ease-out;
-      will-change: transform, opacity;
+      gap: 6px;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+      transform-style: preserve-3d
     }
 
     .cat-icon {
       width: 48px;
       height: 48px;
       object-fit: contain;
-      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.3));
+      filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3))
     }
 
     .cat-name {
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 700;
       color: var(--text-dim);
       text-transform: uppercase;
-    }
-
-    .swiper-slide:not(.swiper-slide-active) .cat-card {
-      opacity: 0.5;
-      filter: blur(0.5px);
-      transform: scale(0.9);
-    }
-
-    .swiper-slide:not(.swiper-slide-active) .cat-icon {
-      filter: brightness(0.7) drop-shadow(0 4px 12px rgba(0,0,0,0.3));
-    }
-
-    .swiper-slide-active .cat-card {
-      opacity: 1;
-      filter: blur(0);
-      transform: scale(1.1);
-    }
-
-    .swiper-slide-active .cat-icon {
-      filter: brightness(1.2) drop-shadow(0 6px 16px rgba(0,0,0,0.4));
+      letter-spacing: 0.03em
     }
 
     .products {
-      height: 360px;
-      min-height: 180px;
-      margin-bottom: 16px;
+      flex: 1;
       border-radius: 24px;
-      background: var(--products-bg, rgba(16, 16, 20, 0.6));
+      background: rgba(16, 16, 20, 0.6);
       backdrop-filter: blur(20px);
-      padding: 16px 0;
+      padding: 28px 0;
+      /* زودنا الـ padding عشان المنتجات تبقى أكبر وأريح */
       overflow: hidden;
-      z-index: 1;
+      position: relative;
+      perspective: 1200px
     }
 
     .products .swiper {
       height: 100%;
-      overflow: hidden;
+      overflow: hidden
     }
 
     .products .swiper-wrapper {
       align-items: center;
+      transform-style: preserve-3d
     }
 
     .product-card {
       display: flex;
-      gap: 10px;
+      gap: 12px;
       align-items: center;
-      padding: 8px 10px;
+      padding: 12px 14px;
       border-radius: 20px;
-      transition: transform 0.12s ease-out, opacity 0.12s ease-out, filter 0.12s ease-out, background 0.12s ease-out;
-      will-change: transform, opacity;
-      transform: translateZ(0);
-      backface-visibility: hidden;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+      transform-style: preserve-3d;
+      backface-visibility: hidden
     }
 
     .product-image {
-      width: 72px;
-      height: 72px;
+      width: 80px;
+      height: 80px;
       border-radius: 16px;
       overflow: hidden;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8)
     }
 
     .product-image img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: transform 0.12s ease-out;
-      will-change: transform;
-      transform: translateZ(0);
+      transition: transform 0.25s ease
     }
 
     .product-name {
-      font-size: 14px;
+      font-size: 15px;
       font-weight: 800;
+      line-height: 1.3
     }
 
     .product-desc {
@@ -209,194 +215,257 @@
       -webkit-line-clamp: 2;
       display: -webkit-box;
       -webkit-box-orient: vertical;
-      overflow: hidden;
+      overflow: hidden
     }
 
     .product-price {
-      font-size: 17px;
+      font-size: 18px;
       font-weight: 900;
       background: linear-gradient(135deg, var(--gold), #f59e0b);
       -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      -webkit-text-fill-color: transparent
     }
 
-    .swiper-slide:not(.swiper-slide-active) .product-card {
-      opacity: 0.45;
-      filter: blur(1px) brightness(0.7);
-      transform: scale(0.92) translateZ(0);
-    }
-
-    .swiper-slide-active .product-card {
-      background: rgba(255, 255, 255, 0.09);
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.95), 0 0 0 1px rgba(255, 255, 255, 0.1);
-      transform: scale(1) translateZ(0);
-      filter: blur(0);
-    }
-
-    .swiper-slide-active .product-image img {
-      transform: scale(1.15) translateZ(0);
-    }
-
-    .details-section {
-      border-radius: 24px;
-      background: var(--details-bg, rgba(16, 16, 20, 0.75));
-      backdrop-filter: blur(30px);
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
-      padding: 18px;
-      position: relative;
-    }
-
-    .details-section::before {
-      content: '';
-      position: absolute;
+    .modal {
+      display: none;
+      position: fixed;
       inset: 0;
-      background: linear-gradient(135deg, var(--details-gradient-1, rgba(99, 102, 241, 0.08)), transparent, var(--details-gradient-2, rgba(168, 85, 247, 0.08)));
-      pointer-events: none;
-      border-radius: 24px;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(12px);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+      animation: fadeIn 0.2s ease;
+      padding: 20px
     }
 
-    .details-header {
+    .modal.active {
+      display: flex
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0
+      }
+
+      to {
+        opacity: 1
+      }
+    }
+
+    .modal-content {
+      background: var(--details-bg, rgba(16, 16, 20, 0.95));
+      border-radius: 28px;
+      width: 100%;
+      max-width: 400px;
+      padding: 24px;
+      max-height: 80vh;
+      overflow-y: auto;
+      animation: scaleIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative
+    }
+
+    @keyframes scaleIn {
+      from {
+        transform: scale(0.9);
+        opacity: 0
+      }
+
+      to {
+        transform: scale(1);
+        opacity: 1
+      }
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      color: var(--text);
+      font-size: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s
+    }
+
+    .modal-close:active {
+      background: rgba(255, 255, 255, 0.2)
+    }
+
+    .modal-header {
       display: flex;
       gap: 16px;
-      align-items: center;
-      margin-bottom: 18px;
-      position: relative;
-      z-index: 1;
+      margin-bottom: 20px
     }
 
-    .details-image {
-      width: 85px;
-      height: 85px;
-      border-radius: 16px;
+    .modal-image {
+      width: 100px;
+      height: 100px;
+      border-radius: 18px;
       overflow: hidden;
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.8);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8)
     }
 
-    .details-image img {
+    .modal-image img {
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: cover
     }
 
-    .details-title {
-      font-size: 19px;
+    .modal-title {
+      font-size: 22px;
       font-weight: 900;
-      margin: 8px 0 4px;
+      margin: 12px 0 8px
     }
 
-    .details-price-large {
-      font-size: 28px;
+    .modal-rating {
+      color: var(--gold);
+      font-size: 16px;
+      margin-bottom: 8px
+    }
+
+    .modal-price {
+      font-size: 32px;
       font-weight: 900;
       background: linear-gradient(135deg, var(--gold), #f59e0b);
       -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      -webkit-text-fill-color: transparent
     }
 
-    .details-info {
+    .modal-info {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 14px;
-      margin: 18px 0;
-      position: relative;
-      z-index: 1;
+      gap: 12px;
+      margin: 20px 0
     }
 
     .info-card {
-      background: rgba(255, 255, 255, 0.05);
+      background: rgba(255, 255, 255, 0.06);
       border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 12px;
-      padding: 12px;
-      text-align: center;
+      border-radius: 14px;
+      padding: 14px;
+      text-align: center
     }
 
     .info-label {
       font-size: 11px;
       color: var(--text-dim);
       text-transform: uppercase;
+      margin-bottom: 6px
     }
 
     .info-value {
-      font-size: 16px;
-      font-weight: 800;
-      margin-top: 4px;
+      font-size: 17px;
+      font-weight: 800
     }
 
-    .ingredients-title {
+    .modal-section-title {
       font-size: 13px;
       font-weight: 700;
       color: var(--text-dim);
-      margin: 16px 0 10px;
-      text-transform: uppercase;
-      position: relative;
-      z-index: 1;
+      margin: 20px 0 12px;
+      text-transform: uppercase
     }
 
     .ingredients-list {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
-      position: relative;
-      z-index: 1;
-      --ing-row-h: 28px;
-      --ing-gap: 10px;
-      height: calc(var(--ing-row-h) * 2 + var(--ing-gap));
-      overflow: hidden;
+      gap: 10px
     }
 
     .ingredient-tag {
-      display: inline-flex;
-      align-items: center;
-      height: 28px;
-      padding: 0 12px;
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 10px;
+      padding: 8px 14px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 12px;
       font-size: 12px;
+      font-weight: 600
     }
 
-    @media (max-height: 640px) {
+    .skeleton {
+      background: linear-gradient(90deg, rgba(255, 255, 255, 0.05) 25%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0.05) 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite
+    }
+
+    @keyframes shimmer {
+      0% {
+        background-position: 200% 0
+      }
+
+      100% {
+        background-position: -200% 0
+      }
+    }
+
+    .skeleton-product {
+      display: flex;
+      gap: 12px;
+      padding: 12px 14px;
+      margin: 8px 0
+    }
+
+    .skeleton-img {
+      width: 80px;
+      height: 80px;
+      border-radius: 16px
+    }
+
+    .skeleton-text {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      justify-content: center
+    }
+
+    .skeleton-line {
+      height: 14px;
+      border-radius: 4px
+    }
+
+    .skeleton-line.w-60 {
+      width: 60%
+    }
+
+    .skeleton-line.w-40 {
+      width: 40%
+    }
+
+    @media (max-height:640px) {
       .app {
-        padding-top: 72px;
+        padding-top: 130px
       }
 
       .header {
-        padding: 10px 14px;
+        padding: 14px 18px
       }
 
       .header-logo {
-        width: 36px;
-        height: 36px;
-        font-size: 18px;
+        width: 56px;
+        height: 56px;
+        font-size: 28px
       }
 
       .header-title {
-        font-size: 15px;
+        font-size: 20px
+      }
+
+      .categories {
+        height: 90px
       }
 
       .cat-icon {
-        width: 40px;
-        height: 40px;
+        width: 42px;
+        height: 42px
       }
-
-      .details-image {
-        width: 72px;
-        height: 72px;
-      }
-
-      .details-title {
-        font-size: 17px;
-      }
-
-      .details-price-large {
-        font-size: 24px;
-      }
-
-      .ingredients-title {
-        font-size: 12px;
-      }
-
-      .ingredients-list { --ing-row-h: 24px; --ing-gap: 8px; gap: 8px; }
-      .ingredient-tag { font-size: 11px; height: 24px; padding: 0 10px; }
     }
   </style>
 </head>
@@ -405,10 +474,8 @@
   <div class="app">
     <header class="header">
       <div class="header-logo" id="logo">⏳</div>
-      <div>
-        <div class="header-title" id="restaurantName">Loading...</div>
-        <div style="font-size:11px;color:#777;margin-top:2px;">Premium Dining Experience</div>
-      </div>
+      <div class="header-title" id="restaurantName">Loading...</div>
+      <div class="header-subtitle">Premium Dining Experience</div>
     </header>
 
     <div class="categories">
@@ -419,108 +486,104 @@
 
     <div class="products">
       <div class="swiper" id="prodSwiper">
-        <div class="swiper-wrapper" id="prodWrapper"></div>
+        <div class="swiper-wrapper" id="prodWrapper">
+          <div class="swiper-slide">
+            <div class="skeleton-product">
+              <div class="skeleton skeleton-img"></div>
+              <div class="skeleton-text">
+                <div class="skeleton skeleton-line w-60"></div>
+                <div class="skeleton skeleton-line w-40"></div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
+  </div>
 
-    <section class="details-section">
-      <div class="details-header">
-        <div class="details-image"><img id="detailsImg" src="" alt=""></div>
+  <div class="modal" id="modal">
+    <div class="modal-content">
+      <button class="modal-close" id="modalClose">×</button>
+      <div class="modal-header">
+        <div class="modal-image"><img id="modalImg" src="" alt=""></div>
         <div style="flex:1">
-          <div
-            style="padding:4px 12px;background:rgba(16,185,129,0.3);border:1px solid rgba(16,185,129,0.5);border-radius:8px;display:inline-block;font-size:10px;font-weight:800;color:#10b981;">
-            MOST ORDERED</div>
-          <h3 class="details-title" id="detailsTitle">Loading...</h3>
-          <div style="color:var(--gold);font-size:15px;">⭐ <span id="detailsRating">4.8</span> <span
-              style="color:#777">(124)</span></div>
+          <div class="modal-title" id="modalTitle">Product</div>
+          <div class="modal-rating">⭐ <span id="modalRating">4.8</span></div>
+          <div class="modal-price" id="modalPrice">$0.00</div>
         </div>
-        <div class="details-price-large" id="detailsPrice">$0.00</div>
       </div>
-      <div class="details-info">
+      <div class="modal-info">
         <div class="info-card">
           <div class="info-label">Calories</div>
-          <div class="info-value" id="detailsCalories">—</div>
+          <div class="info-value" id="modalCalories">—</div>
         </div>
         <div class="info-card">
           <div class="info-label">Prep Time</div>
-          <div class="info-value" id="detailsTime">—</div>
+          <div class="info-value" id="modalTime">—</div>
         </div>
       </div>
-      <div class="ingredients-title">Ingredients</div>
-      <div class="ingredients-list" id="ingredientsList"></div>
-    </section>
+      <div class="modal-section-title">Description</div>
+      <p id="modalDesc" style="color:var(--text-dim);line-height:1.6;font-size:14px"></p>
+      <div class="modal-section-title">Ingredients</div>
+      <div class="ingredients-list" id="modalIngredients"></div>
+    </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script>
-    let audioContext;
-    let lastFeedback = 0;
+    let audioCtx, lastFeedback = 0, restaurant, catSwiper, prodSwiper, currentCat = 0;
+    const catWrapper = document.getElementById('catWrapper'), prodWrapper = document.getElementById('prodWrapper'), modal = document.getElementById('modal');
 
-    function initAudio() {
-      if (!audioContext) {
-        audioContext = new (window.AudioContext || window.webkitAudioContext)();
-      }
+    function initAudio() { if (!audioCtx) { audioCtx = new (window.AudioContext || window.webkitAudioContext)() } }
+
+    function playSound() {
+  if (!audioCtx) return;
+  const now = performance.now();
+  if (now - lastFeedback < 50) return;
+  lastFeedback = now;
+  
+  try {
+    const osc = audioCtx.createOscillator(), gain = audioCtx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(1519.91, audioCtx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(1200, audioCtx.currentTime + 0.01);
+    gain.gain.setValueAtTime(0, audioCtx.currentTime);
+    gain.gain.linearRampToValueAtTime(0.012, audioCtx.currentTime + 0.005);
+    gain.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 0.025);
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.start(audioCtx.currentTime);
+    osc.stop(audioCtx.currentTime + 0.025);
+    
+    if (navigator.vibrate) navigator.vibrate(2);
+  } catch (e) { }
+}
+
+    function showModal(prod) {
+      document.getElementById('modalImg').src = prod.image;
+      document.getElementById('modalTitle').textContent = prod.name;
+      document.getElementById('modalPrice').textContent = `$${prod.price.toFixed(2)}`;
+      document.getElementById('modalRating').textContent = prod.rating || '—';
+      document.getElementById('modalCalories').textContent = prod.calories || '—';
+      document.getElementById('modalTime').textContent = prod.time || '—';
+      document.getElementById('modalDesc').textContent = prod.description || '';
+      const list = document.getElementById('modalIngredients');
+      list.innerHTML = '';
+      (prod.ingredients || []).forEach(i => {
+        const tag = document.createElement('span');
+        tag.className = 'ingredient-tag';
+        tag.textContent = i;
+        list.appendChild(tag);
+      });
+      modal.classList.add('active');
     }
 
-    function playFeedback() {
-      initAudio();
-      const nowTime = performance.now();
-      if (nowTime - lastFeedback < 120) return;
-      lastFeedback = nowTime;
+    function hideModal() { modal.classList.remove('active') }
 
-      const osc = audioContext.createOscillator();
-      const gain = audioContext.createGain();
-      const filter = audioContext.createBiquadFilter();
+    document.getElementById('modalClose').onclick = hideModal;
+    modal.onclick = e => { if (e.target === modal) hideModal() };
 
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(600, audioContext.currentTime);
-
-      filter.type = 'lowpass';
-      filter.frequency.setValueAtTime(1200, audioContext.currentTime);
-
-      gain.gain.setValueAtTime(0, audioContext.currentTime);
-      gain.gain.linearRampToValueAtTime(0.02, audioContext.currentTime + 0.02);
-      gain.gain.exponentialRampToValueAtTime(0.0008, audioContext.currentTime + 0.14);
-
-      osc.connect(filter);
-      filter.connect(gain);
-      gain.connect(audioContext.destination);
-
-      osc.start();
-      osc.stop(audioContext.currentTime + 0.14);
-
-      if ('vibrate' in navigator) {
-        navigator.vibrate(60);
-      }
-    }
-
-    const params = new URLSearchParams(window.location.search);
-    const r = params.get("r") || "1";
-
-    let restaurant, catSwiper, prodSwiper, currentCatIndex = 0;
-    let updateTimeout = null;
-    let isScrolling = false;
-    const catWrapper = document.getElementById('catWrapper');
-    const prodWrapper = document.getElementById('prodWrapper');
-
-    function adjustLayout() {
-      const header = document.querySelector('.header');
-      const categories = document.querySelector('.categories');
-      const details = document.querySelector('.details-section');
-      const products = document.querySelector('.products');
-      const appEl = document.querySelector('.app');
-      const h = window.innerHeight;
-      const headerH = header?.getBoundingClientRect().height || 0;
-      const catH = categories?.getBoundingClientRect().height || 0;
-      const detailsH = details?.getBoundingClientRect().height || 0;
-      const topPad = appEl ? parseFloat(getComputedStyle(appEl).paddingTop) : 0;
-      const bottomPad = appEl ? parseFloat(getComputedStyle(appEl).paddingBottom) : 0;
-      const space = 8;
-      let target = h - headerH - catH - detailsH - topPad - bottomPad - space;
-      if (!isFinite(target)) target = 380;
-      target = Math.max(160, Math.min(420, target));
-      if (products) products.style.height = target + 'px';
-    }
+    const params = new URLSearchParams(location.search), r = params.get("r") || "1";
 
     function createCat(cat) {
       const slide = document.createElement('div');
@@ -532,172 +595,203 @@
     function createProd(prod) {
       const slide = document.createElement('div');
       slide.className = 'swiper-slide';
-      slide.innerHTML = `
-    <div class="product-card">
-      <div class="product-image"><img src="${prod.image}" alt="${prod.name}" loading="lazy"></div>
-      <div style="flex:1">
-        <div class="product-name">${prod.name}</div>
-        <div class="product-desc">${prod.description}</div>
-      </div>
-      <div class="product-price">$${prod.price.toFixed(2)}</div>
-    </div>`;
+      slide.innerHTML = `<div class="product-card" data-prod='${JSON.stringify(prod).replace(/'/g, "&apos;")}'>
+        <div class="product-image"><img src="${prod.image}" alt="${prod.name}" loading="lazy"></div>
+        <div style="flex:1">
+          <div class="product-name">${prod.name}</div>
+          <div class="product-desc">${prod.description}</div>
+        </div>
+        <div class="product-price">$${prod.price.toFixed(2)}</div>
+      </div>`;
       prodWrapper.appendChild(slide);
     }
 
-    function updateDetails(prod) {
-      if (isScrolling) return;
+    function apply3D(swiper, isCat) {
+      if (!swiper || !swiper.slides || swiper.slides.length === 0) return;
+      const slides = swiper.slides;
+      const active = swiper.activeIndex;
+      const total = slides.length;
 
-      document.getElementById('detailsImg').src = prod.image;
-      document.getElementById('detailsTitle').textContent = prod.name;
-      document.getElementById('detailsPrice').textContent = `$${prod.price.toFixed(2)}`;
-      document.getElementById('detailsRating').textContent = prod.rating || '—';
-      document.getElementById('detailsCalories').textContent = prod.calories || '—';
-      document.getElementById('detailsTime').textContent = prod.time || '—';
-      const list = document.getElementById('ingredientsList');
-      list.innerHTML = '';
-      (prod.ingredients || []).forEach(i => {
-        const tag = document.createElement('span');
-        tag.className = 'ingredient-tag';
-        tag.textContent = i;
-        list.appendChild(tag);
+      slides.forEach((slide, i) => {
+        let diff = i - active;
+
+        if (diff > total / 2) { diff -= total }
+        else if (diff < -total / 2) { diff += total }
+
+        const abs = Math.abs(diff);
+        const el = slide.querySelector(isCat ? '.cat-card' : '.product-card');
+        if (!el) return;
+
+        let rot = diff * 20;
+        let z = -abs * 40;
+        let x = diff * 4;
+        let s = 1 - abs * 0.14;
+        let o = 1 - abs * 0.32;
+        let b = abs * 0.15;
+        let br = 1 - abs * 0.16;
+
+        // دعم أفضل للـ loop في الاتجاهين
+        if (abs > 1.9) {  // خففنا الرقم عشان الكاتيجوريز ما تختفيش بدري
+          opacity = Math.max(0, 1 - (abs - 1.9) * 3);
+          scale = Math.max(0.75, 1 - (abs - 1.9) * 0.8);
+          z = -abs * 38;
+          slide.style.visibility = opacity > 0.1 ? 'visible' : 'hidden';
+        } else {
+          slide.style.visibility = 'visible';
+          slide.style.pointerEvents = 'auto';
+        }
+
+        el.style.transform = `translateX(${x}px) translateZ(${z}px) rotateY(${rot}deg) scale(${s})`;
+        el.style.opacity = o;
+        el.style.filter = `blur(${b}px) brightness(${br})`;
+
+        if (abs === 0) {
+          el.style.background = 'rgba(255,255,255,0.1)';
+          el.style.boxShadow = '0 20px 60px rgba(0,0,0,0.95),0 0 0 1px rgba(255,255,255,0.12)';
+          if (!isCat) {
+            const img = el.querySelector('.product-image img');
+            if (img) img.style.transform = 'scale(1.12)';
+          }
+        } else {
+          el.style.background = 'transparent';
+          el.style.boxShadow = 'none';
+          if (!isCat) {
+            const img = el.querySelector('.product-image img');
+            if (img) img.style.transform = 'scale(1)';
+          }
+        }
       });
     }
 
-    function scheduleUpdate(prod) {
-      if (updateTimeout) clearTimeout(updateTimeout);
-      updateTimeout = setTimeout(() => {
-        updateDetails(prod);
-      }, 100);
+    function loadCategory() {
+      const cat = restaurant.categories[currentCat];
+      prodWrapper.innerHTML = '';
+      cat.products.forEach(createProd);
+
+      const repeatTimes = 5;
+      const originalProducts = [...cat.products];
+      for (let i = 0; i < repeatTimes; i++) {
+        originalProducts.forEach(createProd);
+      }
+
+      if (prodSwiper) prodSwiper.destroy(true, true);
+
+      prodSwiper = new Swiper('#prodSwiper', {
+        direction: 'vertical',
+        slidesPerView: 5,
+        centeredSlides: true,
+        spaceBetween: 10,
+        loop: true,
+        loopAdditionalSlides: 20,        // ← جديد مهم جدًا
+        loopedSlides: cat.products.length * repeatTimes, // ضاعف المنتجات كتير
+        speed: 280,
+        allowTouchMove: true,
+        shortSwipes: true,
+        longSwipes: true,
+        longSwipesRatio: 0.3,
+        grabCursor: true,
+        touchRatio: 1,
+        threshold: 5,
+        resistance: false,
+        watchSlidesProgress: true,
+        slideToClickedSlide: false,
+        on: {
+          init() { apply3D(this, false) },
+          slideChange() { playSound(); apply3D(this, false) },
+          slideChangeTransitionStart() { apply3D(this, false) },
+          slideChangeTransitionEnd() { apply3D(this, false) },
+          progress() { apply3D(this, false) },
+          setTranslate() { apply3D(this, false) },
+          touchMove() { apply3D(this, false) },
+          tap(s, e) {
+            const sl = e.target.closest('.swiper-slide');
+            if (!sl) return;
+            const card = sl.querySelector('.product-card');
+            if (!card) return;
+            if (sl.classList.contains('swiper-slide-active')) {
+              try {
+                const prod = JSON.parse(card.dataset.prod.replace(/&apos;/g, "'"));
+                showModal(prod);
+              } catch (e) { }
+            } else {
+              const idx = Array.from(s.slides).indexOf(sl);
+              if (idx !== -1) s.slideTo(idx, 300);
+            }
+          }
+        }
+      });
     }
 
     function loadRestaurant(data) {
       restaurant = data;
-
       const t = restaurant.theme;
-      document.documentElement.style.setProperty('--bg', t.bg);
-      document.documentElement.style.setProperty('--text', t.text);
-      document.documentElement.style.setProperty('--text-dim', t.textDim);
-      document.documentElement.style.setProperty('--gold', t.gold);
-      document.documentElement.style.setProperty('--border', t.border);
-      document.documentElement.style.setProperty('--gradient-start', t.gradientStart);
-      document.documentElement.style.setProperty('--gradient-end', t.gradientEnd);
-      document.documentElement.style.setProperty('--details-gradient-1', t.detailsGradient1);
-      document.documentElement.style.setProperty('--details-gradient-2', t.detailsGradient2);
-      document.documentElement.style.setProperty('--products-bg', t.productsBackground);
-      document.documentElement.style.setProperty('--header-bg', t.headerBackground);
-      document.documentElement.style.setProperty('--details-bg', t.detailsBackground);
-
-      document.body.style.fontFamily = t.font + ', sans-serif';
-
-      if (t.font !== 'Inter') {
+      for (let k in t) {
+        const prop = k.replace(/([A-Z])/g, '-$1').toLowerCase();
+        document.documentElement.style.setProperty(`--${prop}`, t[k]);
+      }
+      if (t.font && t.font !== 'Inter') {
         const link = document.createElement('link');
-        link.href = `https://fonts.googleapis.com/css2?family=${t.font.replace(' ', '+')}:wght@400;500;600;700;800;900&display=swap`;
+        link.href = `https://fonts.googleapis.com/css2?family=${t.font.replace(' ', '+')}:wght@400;700;900&display=swap`;
         link.rel = 'stylesheet';
         document.head.appendChild(link);
+        document.body.style.fontFamily = t.font + ',sans-serif';
       }
-
       document.getElementById('logo').textContent = restaurant.logo;
       document.getElementById('restaurantName').textContent = restaurant.name;
-
       restaurant.categories.forEach(createCat);
+      const originalCats = [...restaurant.categories];
+      const repeatCount = 8; // نكرر الكاتيجوريز 8 مرات (كفاية جدًا حتى لو عندك 5 بس)
+
+      catWrapper.innerHTML = ''; // نضمن إنها فاضية
+
+      for (let i = 0; i < repeatCount; i++) {
+        originalCats.forEach(cat => createCat(cat));
+      }
+      // === انتهى التعديل ===
+
+      // دلوقتي نعمل Swiper عادي مع loop: true بس
+      if (catSwiper) catSwiper.destroy(true, true);
 
       catSwiper = new Swiper('#catSwiper', {
         slidesPerView: 5,
         centeredSlides: true,
-        spaceBetween: 20,
+        spaceBetween: 10,
         loop: true,
-        freeMode: {
-          enabled: true,
-          sticky: true,
-          momentum: true,
-          momentumRatio: 0.25,
-          momentumVelocityRatio: 0.25
-        },
-        speed: 180,
+        loopedSlides: originalCats.length * repeatCount, // مهم
+        loopAdditionalSlides: 20,
+        speed: 340,
         grabCursor: true,
-        touchRatio: 1.5,
-        threshold: 3,
-        passiveListeners: true,
+        touchRatio: 1.4,
+        resistanceRatio: 0.2,
+        watchSlidesProgress: true,
         on: {
+          init() { apply3D(this, true) },
           slideChange() {
-            currentCatIndex = this.realIndex ?? this.activeIndex ?? 0;
-            playFeedback();
+            currentCat = this.realIndex % originalCats.length; // الأهم هنا
+            playSound();
+            apply3D(this, true);
             loadCategory();
+          },
+          progress() { apply3D(this, true) },
+          setTranslate() { apply3D(this, true) },
+          touchMove() { apply3D(this, true) },
+          tap(s, e) {
+            const sl = e.target.closest('.swiper-slide');
+            if (!sl || sl.classList.contains('swiper-slide-active')) return;
+            const realIdx = s.getSlideIndex(sl) % originalCats.length;
+            s.slideToLoop(realIdx, 340);
           }
         }
       });
 
-      function loadCategory() {
-        const cat = restaurant.categories[currentCatIndex];
-        prodWrapper.innerHTML = '';
-        cat.products.forEach(createProd);
-
-        if (prodSwiper) prodSwiper.destroy(true, true);
-
-        prodSwiper = new Swiper('#prodSwiper', {
-          direction: 'vertical',
-          slidesPerView: 3,
-          centeredSlides: true,
-          spaceBetween: 22,
-          loop: cat.products.length >= 4,
-          freeMode: {
-            enabled: true,
-            sticky: true,
-            momentum: true,
-            momentumRatio: 0.25,
-            momentumVelocityRatio: 0.25,
-            minimumVelocity: 0.02
-          },
-          speed: 180,
-          grabCursor: true,
-          touchRatio: 1.5,
-          threshold: 3,
-          passiveListeners: true,
-          on: {
-            touchStart() {
-              isScrolling = true;
-            },
-            touchEnd() {
-              setTimeout(() => {
-                isScrolling = false;
-                const idx = this.realIndex ?? this.activeIndex ?? 0;
-                updateDetails(cat.products[idx]);
-              }, 150);
-            },
-            slideChange() {
-              const idx = this.realIndex ?? this.activeIndex ?? 0;
-              playFeedback();
-              scheduleUpdate(cat.products[idx]);
-            }
-          }
-        });
-        adjustLayout();
-      }
-
       loadCategory();
-      updateDetails(restaurant.categories[0].products[0]);
-      adjustLayout();
-
-      if ('ResizeObserver' in window) {
-        const ro = new ResizeObserver(() => adjustLayout());
-        const detailsEl = document.querySelector('.details-section');
-        if (detailsEl) ro.observe(detailsEl);
-      }
-      window.addEventListener('resize', adjustLayout, { passive: true });
-
-      document.addEventListener('touchstart', initAudio, { once: true, passive: true });
+      document.addEventListener('click', initAudio, { once: true });
     }
 
     fetch(`restaurant_${r}.json`)
-      .then(res => {
-        if (!res.ok) throw new Error('Restaurant not found');
-        return res.json();
-      })
+      .then(res => { if (!res.ok) throw new Error('Not found'); return res.json() })
       .then(loadRestaurant)
-      .catch(err => {
-        console.error(err);
-        alert('Restaurant not found!');
-      });
+      .catch(() => alert('Restaurant not found!'));
   </script>
 </body>
 
