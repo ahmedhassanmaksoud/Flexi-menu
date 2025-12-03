@@ -752,38 +752,43 @@
       // دلوقتي نعمل Swiper عادي مع loop: true بس
       if (catSwiper) catSwiper.destroy(true, true);
 
-      catSwiper = new Swiper('#catSwiper', {
-        slidesPerView: 5,
-        centeredSlides: true,
-        spaceBetween: 10,
-        loop: true,
-        loopedSlides: originalCats.length * repeatCount, // مهم
-        loopAdditionalSlides: 20,
-        speed: 340,
-        grabCursor: true,
-        touchRatio: 1.4,
-        resistanceRatio: 0.2,
-        watchSlidesProgress: true,
-        on: {
-          init() { apply3D(this, true) },
-          slideChange() {
-            currentCat = this.realIndex % originalCats.length; // الأهم هنا
-            playSound();
-            apply3D(this, true);
-            loadCategory();
-          },
-          progress() { apply3D(this, true) },
-          setTranslate() { apply3D(this, true) },
-          touchMove() { apply3D(this, true) },
-          tap(s, e) {
-            const sl = e.target.closest('.swiper-slide');
-            if (!sl || sl.classList.contains('swiper-slide-active')) return;
-            const realIdx = s.getSlideIndex(sl) % originalCats.length;
-            s.slideToLoop(realIdx, 340);
-          }
-        }
-      });
-
+   catSwiper = new Swiper('#catSwiper', {
+  slidesPerView: 5,
+  centeredSlides: true,
+  spaceBetween: 10,
+  loop: true,
+  loopedSlides: originalCats.length * repeatCount,
+  loopAdditionalSlides: 20,
+  speed: 300,
+  grabCursor: true,
+  touchRatio: 1,
+  resistanceRatio: 0,
+  watchSlidesProgress: true,
+  slideToClickedSlide: true,
+  freeMode: false,
+  threshold: 8,
+  on: {
+    init() { apply3D(this, true) },
+    slideChange() {
+      const newCat = this.realIndex % originalCats.length;
+      if (newCat !== currentCat) {
+        currentCat = newCat;
+        playSound();
+        loadCategory();
+      }
+      apply3D(this, true);
+    },
+    progress() { apply3D(this, true) },
+    setTranslate() { apply3D(this, true) },
+    touchMove() { apply3D(this, true) },
+    tap(s, e) {
+      const sl = e.target.closest('.swiper-slide');
+      if (!sl || sl.classList.contains('swiper-slide-active')) return;
+      const idx = Array.from(s.slides).indexOf(sl);
+      if (idx !== -1) s.slideTo(idx, 300);
+    }
+  }
+});
       loadCategory();
       document.addEventListener('click', initAudio, { once: true });
     }
