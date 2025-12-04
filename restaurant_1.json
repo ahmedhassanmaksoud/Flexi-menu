@@ -1,34 +1,26 @@
 {
-  "name": "Luxe Bistro",
+  "name": "Ecuadoor Cafe ",
   "logo": "🍽️",
+  "logoImage": "ecuador-logo.PNG",
   "theme": {
     "bg": "#08080b",
     "text": "#fff",
     "textDim": "#aaa",
-    "gold": "#fbbf24",
+    "gold": "#f1f5f9",
+    
     "border": "rgba(255, 255, 255, 0.12)",
-    "gradientStart": "rgba(99, 102, 241, 0.15)",
-    "gradientEnd": "rgba(168, 85, 247, 0.12)",
+    "gradientStart": "rgba(203, 213, 225, 0.22)",
+    "gradientEnd": "rgba(100, 116, 139, 0.18)",
     "detailsGradient1": "rgba(99, 102, 241, 0.08)",
     "detailsGradient2": "rgba(168, 85, 247, 0.08)",
     "productsBackground": "rgba(16, 16, 20, 0.6)",
     "headerBackground": "rgba(16, 16, 20, 0.95)",
     "detailsBackground": "rgba(16, 16, 20, 0.75)",
-    "font": "Inter"
+   "font": "Manrope"
+    
   },
   "categories": [
-    {
-      "id": "breakfast",
-      "name": "Breakfast",
-      "icon": "https://cdn-icons-png.flaticon.com/512/3480/3480822.png",
-      "products": [
-        {"id":1,"name":"Eggs Benedict","description":"Poached eggs on English muffin with hollandaise","price":12.50,"image":"https://images.unsplash.com/photo-1608039829572-78524f79c4c7?w=400","calories":"520 kcal","time":"15 min","rating":4.9,"ingredients":["Eggs","English Muffin","Hollandaise","Canadian Bacon"]},
-        {"id":2,"name":"Avocado Toast","description":"Smashed avocado on sourdough with cherry tomatoes","price":10.00,"image":"https://images.unsplash.com/photo-1541519227354-08fa5d50c44d?w=400","calories":"380 kcal","time":"8 min","rating":4.7,"ingredients":["Avocado","Sourdough","Cherry Tomatoes","Feta"]},
-        {"id":3,"name":"Pancake Stack","description":"Fluffy buttermilk pancakes with maple syrup","price":11.00,"image":"https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=400","calories":"640 kcal","time":"12 min","rating":4.8,"ingredients":["Flour","Buttermilk","Eggs","Maple Syrup"]},
-        {"id":4,"name":"French Toast","description":"Brioche bread with caramelized bananas","price":11.50,"image":"https://images.unsplash.com/photo-1484723091739-30a097e8f929?w=400","calories":"580 kcal","time":"10 min","rating":4.6,"ingredients":["Brioche","Eggs","Cinnamon","Bananas"]},
-        {"id":5,"name":"Greek Yogurt Bowl","description":"Greek yogurt with honey, granola and berries","price":9.00,"image":"https://images.unsplash.com/photo-1488477181946-6428a0291777?w=400","calories":"320 kcal","time":"5 min","rating":4.5,"ingredients":["Greek Yogurt","Honey","Granola","Mixed Berries"]}
-      ]
-    },
+  
     {
       "id": "coffee",
       "name": "Coffee",
@@ -89,18 +81,7 @@
         {"id":55,"name":"Veggie Burger","description":"Beyond meat with caramelized onions","price":12.50,"image":"https://images.unsplash.com/photo-1520072959219-c595dc870360?w=400","calories":"520 kcal","time":"12 min","rating":4.5,"ingredients":["Beyond Meat","Onions","Lettuce"]}
       ]
     },
-    {
-      "id": "seafood",
-      "name": "Seafood",
-      "icon": "https://cdn-icons-png.flaticon.com/512/2718/2718024.png",
-      "products": [
-        {"id":61,"name":"Lobster Tail","description":"Grilled lobster with garlic butter","price":38.00,"image":"https://images.unsplash.com/photo-1625938145312-559ce5656dd6?w=400","calories":"420 kcal","time":"20 min","rating":4.9,"ingredients":["Lobster","Butter","Garlic","Lemon"]},
-        {"id":62,"name":"Shrimp Scampi","description":"Jumbo shrimp in white wine sauce","price":24.00,"image":"https://images.unsplash.com/photo-1633504581786-316c8002b1b9?w=400","calories":"380 kcal","time":"18 min","rating":4.8,"ingredients":["Shrimp","White Wine","Garlic","Pasta"]},
-        {"id":63,"name":"Fish & Chips","description":"Beer battered cod with fries","price":16.50,"image":"https://images.unsplash.com/photo-1579208575657-c595a05383b7?w=400","calories":"720 kcal","time":"15 min","rating":4.7,"ingredients":["Cod","Beer Batter","Fries","Tartar"]},
-        {"id":64,"name":"Tuna Steak","description":"Seared ahi tuna with wasabi","price":26.00,"image":"https://images.unsplash.com/photo-1580959375944-26d5ae364a64?w=400","calories":"340 kcal","time":"12 min","rating":4.9,"ingredients":["Ahi Tuna","Wasabi","Soy","Sesame"]},
-        {"id":65,"name":"Seafood Paella","description":"Spanish rice with mixed seafood","price":28.00,"image":"https://images.unsplash.com/photo-1536504080740-6c2d1c7b0c2f?w=400","calories":"620 kcal","time":"25 min","rating":4.8,"ingredients":["Rice","Shrimp","Mussels","Saffron"]}
-      ]
-    },
+    
     {
       "id": "pasta",
       "name": "Pasta",
@@ -113,18 +94,7 @@
         {"id":75,"name":"Ravioli","description":"Spinach and ricotta filled pasta","price":16.00,"image":"https://images.unsplash.com/photo-1587740908075-9e245070dfaa?w=400","calories":"580 kcal","time":"18 min","rating":4.7,"ingredients":["Ravioli","Spinach","Ricotta","Sage"]}
       ]
     },
-    {
-      "id": "asian",
-      "name": "Asian",
-      "icon": "https://cdn-icons-png.flaticon.com/512/2718/2718898.png",
-      "products": [
-        {"id":81,"name":"Pad Thai","description":"Thai stir-fried noodles with shrimp","price":14.50,"image":"https://images.unsplash.com/photo-1559314809-0d155014e29e?w=400","calories":"580 kcal","time":"15 min","rating":4.8,"ingredients":["Rice Noodles","Shrimp","Peanuts","Tamarind"]},
-        {"id":82,"name":"Ramen Bowl","description":"Japanese noodles in pork broth","price":13.50,"image":"https://images.unsplash.com/photo-1557872943-16a5ac26437e?w=400","calories":"620 kcal","time":"20 min","rating":4.9,"ingredients":["Noodles","Pork","Egg","Broth"]},
-        {"id":83,"name":"Sushi Platter","description":"Assorted nigiri and rolls","price":22.00,"image":"https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?w=400","calories":"480 kcal","time":"25 min","rating":4.9,"ingredients":["Rice","Fish","Nori","Wasabi"]},
-        {"id":84,"name":"Fried Rice","description":"Wok-fried rice with vegetables","price":11.50,"image":"https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=400","calories":"520 kcal","time":"12 min","rating":4.6,"ingredients":["Rice","Egg","Vegetables","Soy"]},
-        {"id":85,"name":"Spring Rolls","description":"Crispy rolls with sweet chili sauce","price":8.50,"image":"https://images.unsplash.com/photo-1620151318414-0778a08b97a2?w=400","calories":"320 kcal","time":"10 min","rating":4.7,"ingredients":["Wrappers","Vegetables","Vermicelli"]}
-      ]
-    },
+ 
     {
       "id": "desserts",
       "name": "Desserts",
