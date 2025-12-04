@@ -1,6 +1,7 @@
 {
-  "name": "Luxe Bistro",
+  "name": "Luxe Lamma",
   "logo": "🍽️",
+  "logoImage": "Lama.jpg",
  "theme": {
     "bg": "#ffe8d6",
     "text": "#3d2416",
@@ -175,3 +176,4 @@
   ]
 
 }
+
