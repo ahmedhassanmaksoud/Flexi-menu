@@ -3,22 +3,43 @@
   "logo": "🍽️",
   "logoImage": "ecuador-logo.PNG",
   "theme": {
-    "bg": "#08080b",
-    "text": "#fff",
-    "textDim": "#aaa",
-    "gold": "#f1f5f9",
-    
-    "border": "rgba(255, 255, 255, 0.12)",
-    "gradientStart": "rgba(203, 213, 225, 0.22)",
-    "gradientEnd": "rgba(100, 116, 139, 0.18)",
-    "detailsGradient1": "rgba(99, 102, 241, 0.08)",
-    "detailsGradient2": "rgba(168, 85, 247, 0.08)",
-    "productsBackground": "rgba(16, 16, 20, 0.6)",
-    "headerBackground": "rgba(16, 16, 20, 0.95)",
-    "detailsBackground": "rgba(16, 16, 20, 0.75)",
-   "font": "Manrope"
-    
-  },
+  "bg": "#08080b",
+  "text": "#fff",
+  "textDim": "#aaa",
+  "gold": "#f1f5f9",
+  "border": "rgba(255, 255, 255, 0.12)",
+  "gradientStart": "rgba(203, 213, 225, 0.22)",
+  "gradientEnd": "rgba(100, 116, 139, 0.18)",
+  "headerBg": "rgba(16, 16, 20, 0.98)",
+  "headerShadow": "0 8px 32px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.08)",
+  "headerBorderRadius": "20px",
+  "logoBackground": "rgba(255, 255, 255, 0.05)",
+  "logoShadow": "0 4px 16px rgba(0, 0, 0, 0.3), inset 0 0 0 1px rgba(255, 255, 255, 0.08)",
+  "titleGradient": "linear-gradient(135deg, #fff, #ccc)",
+  "categoriesBackground": "rgba(16, 16, 20, 0.6)",
+  "categoryBorderRadius": "24px",
+  "categoryShadow": "0 4px 16px rgba(0, 0, 0, 0.2)",
+  "iconShadow": "drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3))",
+  "productsBackground": "rgba(16, 16, 20, 0.6)",
+  "productsBorderRadius": "24px",
+  "productsShadow": "0 4px 16px rgba(0, 0, 0, 0.2)",
+  "cardBorderRadius": "20px",
+  "productImageShadow": "0 10px 30px rgba(0, 0, 0, 0.8)",
+  "priceGradient": "linear-gradient(135deg, #f1f5f9, #cbd5e1)",
+  "activeCardBackground": "rgba(255, 255, 255, 0.1)",
+  "activeCardShadow": "0 20px 60px rgba(0, 0, 0, 0.95), 0 0 0 1px rgba(255, 255, 255, 0.12)",
+  "modalOverlay": "rgba(0, 0, 0, 0.85)",
+  "modalBg": "rgba(16, 16, 20, 0.95)",
+  "modalCloseBg": "rgba(255, 255, 255, 0.1)",
+  "modalCloseActive": "rgba(255, 255, 255, 0.2)",
+  "modalImageShadow": "0 10px 40px rgba(0, 0, 0, 0.8)",
+  "infoCardBg": "rgba(255, 255, 255, 0.06)",
+  "infoCardBorder": "rgba(255, 255, 255, 0.12)",
+  "ingredientTagBg": "rgba(255, 255, 255, 0.08)",
+  "ingredientTagBorder": "rgba(255, 255, 255, 0.14)",
+  "skeletonBg": "linear-gradient(90deg, rgba(255, 255, 255, 0.05) 25%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0.05) 75%)",
+  "font": "Manrope"
+},
   "categories": [
   
     {
@@ -121,6 +142,7 @@
     }
   ]
 }
+
 
 
 
