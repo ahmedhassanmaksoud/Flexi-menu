@@ -545,10 +545,26 @@
     let audioCtx, lastFeedback = 0, restaurant, catSwiper, prodSwiper, currentCat = 0;
     const catWrapper = document.getElementById('catWrapper'), prodWrapper = document.getElementById('prodWrapper'), modal = document.getElementById('modal');
 
-    function initAudio() { if (!audioCtx) { audioCtx = new (window.AudioContext || window.webkitAudioContext)() } }
+    function initAudio() { 
+      if (!audioCtx) { 
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+    }
 
     function playSound() {
-      if (!audioCtx) return;
+      if (!audioCtx) {
+        initAudio();
+      }
+      
+      if (audioCtx && audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+      
+      if (!audioCtx || audioCtx.state !== 'running') return;
+      
       const now = performance.now();
       if (now - lastFeedback < 50) return;
       lastFeedback = now;
@@ -567,7 +583,9 @@
         osc.stop(audioCtx.currentTime + 0.025);
 
         if (navigator.vibrate) navigator.vibrate(2);
-      } catch (e) { }
+      } catch (e) { 
+        console.error('Audio error:', e);
+      }
     }
 
     function showModal(prod) {
@@ -802,7 +820,15 @@
       });
 
       loadCategory();
+      
       document.addEventListener('click', initAudio, { once: true });
+      document.addEventListener('touchstart', initAudio, { once: true });
+      
+      document.addEventListener('visibilitychange', () => {
+        if (!document.hidden && audioCtx) {
+          audioCtx.resume();
+        }
+      });
     }
 
     fetch(`restaurant_${r}.json`)
