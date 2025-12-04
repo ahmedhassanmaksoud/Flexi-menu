@@ -703,7 +703,7 @@ body::before {
       prodWrapper.innerHTML = '';
       cat.products.forEach(createProd);
 
-      const repeatTimes = 5;
+      const repeatTimes = 15;
       const originalProducts = [...cat.products];
       for (let i = 0; i < repeatTimes; i++) {
         originalProducts.forEach(createProd);
@@ -718,7 +718,7 @@ body::before {
         spaceBetween: 20,
         loop: true,
         loopAdditionalSlides: 20,        // ← جديد مهم جدًا
-        loopedSlides: cat.products.length * repeatTimes, // ضاعف المنتجات كتير
+        loopedSlides: cat.products.length * 15, // ضاعف المنتجات كتير
         speed: 280,
         allowTouchMove: true,
         shortSwipes: true,
