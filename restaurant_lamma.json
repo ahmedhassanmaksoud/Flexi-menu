@@ -1,20 +1,43 @@
 {
   "name": "Luxe Bistro",
   "logo": "🍽️",
-  "theme": {
-    "bg": "#000000",
-    "text": "#ffffff",
-    "textDim": "#888888",
-    "gold": "#444444",
-    "border": "rgba(255, 255, 255, 0.12)",
-    "gradientStart": "rgba(0,0,0,0.15)",
-    "gradientEnd": "rgba(0,0,0,0.12)",
-    "detailsGradient1": "rgba(0,0,0,0.08)",
-    "detailsGradient2": "rgba(0,0,0,0.08)",
-    "productsBackground": "rgba(16, 16, 16, 0.6)",
-    "headerBackground": "rgba(16, 16, 16, 0.95)",
-    "detailsBackground": "rgba(16, 16, 16, 0.75)",
-    "font": "Inter"
+ "theme": {
+    "bg": "#ffe8d6",
+    "text": "#3d2416",
+    "textDim": "#a67c52",
+    "gold": "#ff8c42",
+    "border": "rgba(255, 140, 66, 0.3)",
+    "gradientStart": "rgba(255, 183, 77, 0.4)",
+    "gradientEnd": "rgba(255, 140, 66, 0.35)",
+    "headerBg": "rgba(255, 220, 190, 0.9)",
+    "headerShadow": "0 6px 24px rgba(255, 140, 66, 0.3), 0 0 0 1px rgba(255, 140, 66, 0.2)",
+    "headerBorderRadius": "24px",
+    "logoBackground": "rgba(255, 140, 66, 0.2)",
+    "logoShadow": "0 8px 24px rgba(255, 140, 66, 0.4), inset 0 0 0 1px rgba(255, 183, 77, 0.3)",
+    "titleGradient": "linear-gradient(135deg, #d95d39, #ff8c42)",
+    "categoriesBackground": "rgba(255, 220, 190, 0.75)",
+    "categoryBorderRadius": "24px",
+    "categoryShadow": "0 6px 20px rgba(255, 140, 66, 0.25)",
+    "iconShadow": "drop-shadow(0 4px 10px rgba(255, 140, 66, 0.4))",
+    "productsBackground": "rgba(255, 220, 190, 0.75)",
+    "productsBorderRadius": "24px",
+    "productsShadow": "0 6px 20px rgba(255, 140, 66, 0.25)",
+    "cardBorderRadius": "20px",
+    "productImageShadow": "0 10px 30px rgba(255, 140, 66, 0.3)",
+    "priceGradient": "linear-gradient(135deg, #d95d39, #ff8c42)",
+    "activeCardBackground": "rgba(255, 140, 66, 0.25)",
+    "activeCardShadow": "0 16px 48px rgba(255, 140, 66, 0.4), 0 0 0 1px rgba(255, 140, 66, 0.3)",
+    "modalOverlay": "rgba(61, 36, 22, 0.7)",
+    "modalBg": "rgba(255, 235, 215, 0.98)",
+    "modalCloseBg": "rgba(255, 140, 66, 0.2)",
+    "modalCloseActive": "rgba(255, 140, 66, 0.35)",
+    "modalImageShadow": "0 10px 36px rgba(255, 140, 66, 0.35)",
+    "infoCardBg": "rgba(255, 183, 77, 0.2)",
+    "infoCardBorder": "rgba(255, 140, 66, 0.3)",
+    "ingredientTagBg": "rgba(255, 183, 77, 0.22)",
+    "ingredientTagBorder": "rgba(255, 140, 66, 0.35)",
+    "skeletonBg": "linear-gradient(90deg, rgba(255, 183, 77, 0.15) 25%, rgba(255, 140, 66, 0.25) 50%, rgba(255, 183, 77, 0.15) 75%)",
+    "font": "Raleway"
   },
   "categories": [
     {
@@ -150,4 +173,5 @@
       ]
     }
   ]
+
 }
