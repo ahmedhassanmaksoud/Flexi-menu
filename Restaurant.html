@@ -612,8 +612,7 @@
     document.getElementById('modalClose').onclick = hideModal;
     modal.onclick = e => { if (e.target === modal) hideModal() };
 
-    const params = new URLSearchParams(location.search);
-const restaurantName = params.get("restaurant") || "ecuador";
+    const params = new URLSearchParams(location.search), r = params.get("r") || "1";
 
     function createCat(cat) {
       const slide = document.createElement('div');
@@ -703,7 +702,7 @@ const restaurantName = params.get("restaurant") || "ecuador";
 
       if (prodSwiper) prodSwiper.destroy(true, true);
 
-      prodSwiper = new Swiper('#prodSwiper', {
+       prodSwiper = new Swiper('#prodSwiper', {
         direction: 'vertical',
         slidesPerView: 5,
         centeredSlides: true,
@@ -711,14 +710,14 @@ const restaurantName = params.get("restaurant") || "ecuador";
         loop: true,
         loopAdditionalSlides: 20,
         loopedSlides: cat.products.length * 15,
-        speed: 500,
+        speed: 350,
         allowTouchMove: true,
         shortSwipes: true,
         longSwipes: true,
-        longSwipesRatio: 0.5,
+        longSwipesRatio: 0.3,
         grabCursor: true,
-        touchRatio: 0.6,
-        threshold: 15,
+        touchRatio: 0.8,
+        threshold: 9,
         resistance: false,
         watchSlidesProgress: true,
         slideToClickedSlide: false,
@@ -832,7 +831,7 @@ const restaurantName = params.get("restaurant") || "ecuador";
       });
     }
 
-    fetch(`assets/data/${restaurantName}.json`)
+    fetch(`restaurant_${r}.json`)
       .then(res => { if (!res.ok) throw new Error('Not found'); return res.json() })
       .then(loadRestaurant)
       .catch(() => alert('Restaurant not found!'));
