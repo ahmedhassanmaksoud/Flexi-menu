@@ -54,6 +54,39 @@
       overflow: hidden
     }
 
+    /* شاشة اللودينج */
+    .splash {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg);
+      z-index: 300;
+    }
+
+    .splash.hidden {
+      display: none;
+    }
+
+    .splash-logo {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--logo-background);
+      box-shadow: var(--logo-shadow);
+    }
+
+    .splash-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
     .header {
       position: fixed;
       top: 12px;
@@ -145,6 +178,7 @@
       width: 100%;
       height: 100%;
       justify-content: center;
+      will-change: transform;
     }
 
     .cat-icon {
@@ -476,6 +510,11 @@
 </head>
 
 <body>
+  <!-- شاشة اللودينج باللوجو -->
+  <div class="splash" id="splash">
+    <div class="splash-logo" id="splashLogo"></div>
+  </div>
+
   <div class="app">
     <header class="header">
       <div class="header-logo" id="logo"></div>
@@ -539,15 +578,30 @@
     const catWrapper = document.getElementById('catWrapper'),
       prodWrapper = document.getElementById('prodWrapper'),
       modal = document.getElementById('modal');
+    const splash = document.getElementById('splash'),
+      splashLogo = document.getElementById('splashLogo');
 
     const docEl = document.documentElement;
     let activeCardBg = 'rgba(255,255,255,0.1)';
     let activeCardShadow = '0 20px 60px rgba(0,0,0,0.95),0 0 0 1px rgba(255,255,255,0.12)';
+    // كشف تقريبي للأجهزة الضعيفة
+    const IS_LOW_END = (function () {
+      const cores = navigator.hardwareConcurrency || 2;
+      const mem = navigator.deviceMemory || 4; // مش مدعومة في كل المتصفحات
+      // نعتبر الجهاز ضعيف لو عدد الأنوية قليل والرام قليلة
+      if (cores <= 4 && mem <= 2) return true;
+      return false;
+    })();
+
 
     function updateActiveCardStyles() {
       const cs = getComputedStyle(docEl);
       activeCardBg = cs.getPropertyValue('--active-card-background') || activeCardBg;
       activeCardShadow = cs.getPropertyValue('--active-card-shadow') || activeCardShadow;
+    }
+
+    function hideSplash() {
+      if (splash) splash.classList.add('hidden');
     }
 
     let apply3DQueued = false;
@@ -714,7 +768,7 @@
       const cat = restaurant.categories[currentCat];
       prodWrapper.innerHTML = '';
 
-      const repeatTimes = 15;
+      const repeatTimes = IS_LOW_END ? 6 : 15;
       for (let i = 0; i < repeatTimes; i++) {
         cat.products.forEach((prod, idx) => createProd(prod, idx));
       }
@@ -727,8 +781,8 @@
         centeredSlides: true,
         spaceBetween: 20,
         loop: true,
-        loopAdditionalSlides: 20,
-        loopedSlides: cat.products.length * 15,
+        loopAdditionalSlides: IS_LOW_END ? 8 : 20,
+        loopedSlides: cat.products.length * repeatTimes,
         speed: 350,
         allowTouchMove: true,
         shortSwipes: true,
@@ -767,7 +821,11 @@
             }
           }
         }
+
       });
+     setTimeout(() => {
+  scheduleApply3D(prodSwiper, false);
+}, 50);
     }
 
     function loadRestaurant(data) {
@@ -794,8 +852,18 @@
       }
       document.getElementById('restaurantName').textContent = restaurant.name;
 
+      // وضع نفس اللوجو في شاشة اللودينج
+      if (splashLogo) {
+        if (restaurant.logoImage) {
+          splashLogo.innerHTML =
+            `<img src="${restaurant.logoImage}" alt="${restaurant.name}" decoding="async">`;
+        } else {
+          splashLogo.textContent = restaurant.logo || '';
+        }
+      }
+
       const originalCats = [...restaurant.categories];
-      const repeatCount = 8;
+      const repeatCount = IS_LOW_END ? 4 : 8;
 
       catWrapper.innerHTML = '';
 
@@ -811,7 +879,7 @@
         spaceBetween: 10,
         loop: true,
         loopedSlides: originalCats.length * repeatCount,
-        loopAdditionalSlides: 20,
+        loopAdditionalSlides: IS_LOW_END ? 8 : 20,
         speed: 300,
         grabCursor: true,
         touchRatio: 1,
@@ -841,8 +909,12 @@
           }
         }
       });
+     setTimeout(() => {
+  scheduleApply3D(catSwiper, true);
+}, 50);
 
       loadCategory();
+      hideSplash();
 
       document.addEventListener('click', initAudio, { once: true, passive: true });
       document.addEventListener('touchstart', initAudio, { once: true, passive: true });
