@@ -479,6 +479,28 @@
         gap: 14px;
       }
     }
+    /* وضع للأجهزة الضعيفة / أندرويد القديم */
+.low-end .header,
+.low-end .categories,
+.low-end .products {
+  backdrop-filter: none;
+  box-shadow: none;
+  background: #050509;
+}
+
+.low-end .product-card,
+.low-end .cat-card {
+  filter: none !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+.low-end .products,
+.low-end .categories,
+.low-end .header {
+  border-radius: 12px;
+}
+
   </style>
 </head>
 
@@ -544,6 +566,9 @@
   <script>
     let audioCtx, lastFeedback = 0, restaurant, catSwiper, prodSwiper, currentCat = 0;
     const catWrapper = document.getElementById('catWrapper'), prodWrapper = document.getElementById('prodWrapper'), modal = document.getElementById('modal');
+    // متغيّرات لجدولة الـ 3D updates
+    let rafIdCat = null;
+    let rafIdProd = null;
 
     function initAudio() { 
       if (!audioCtx) { 
@@ -612,7 +637,21 @@
     document.getElementById('modalClose').onclick = hideModal;
     modal.onclick = e => { if (e.target === modal) hideModal() };
 
-    const params = new URLSearchParams(location.search), r = params.get("r") || "1";
+   const params = new URLSearchParams(location.search);
+const r = params.get("r") || "1";
+const simpleMode = params.get("simple") === "1";
+
+// كشف الأجهزة الضعيفة (أندرويد قديم أو إجبار بـ simple=1)
+const isLowEndAndroid = simpleMode || (
+  /Android/i.test(navigator.userAgent) &&
+  (navigator.hardwareConcurrency || 4) <= 4
+);
+
+if (isLowEndAndroid) {
+  document.documentElement.classList.add('low-end');
+}
+
+const restaurantName = params.get("restaurant") || "ecuador";
 
     function createCat(cat) {
       const slide = document.createElement('div');
@@ -636,117 +675,157 @@
     }
 
     function apply3D(swiper, isCat) {
-      if (!swiper || !swiper.slides || swiper.slides.length === 0) return;
-      const slides = swiper.slides;
-      const active = swiper.activeIndex;
-      const total = slides.length;
+  if (!swiper || !swiper.slides || swiper.slides.length === 0) return;
+  const slides = swiper.slides;
+  const active = swiper.activeIndex;
+  const total = slides.length;
+  const lowEnd = document.documentElement.classList.contains('low-end');
 
-      slides.forEach((slide, i) => {
-        let diff = i - active;
+  slides.forEach((slide, i) => {
+    let diff = i - active;
 
-        if (diff > total / 2) { diff -= total }
-        else if (diff < -total / 2) { diff += total }
+    if (diff > total / 2) { diff -= total; }
+    else if (diff < -total / 2) { diff += total; }
 
-        const abs = Math.abs(diff);
-        const el = slide.querySelector(isCat ? '.cat-card' : '.product-card');
-        if (!el) return;
+    const abs = Math.abs(diff);
 
-        let rot = diff * 20;
-        let z = -abs * 40;
-        let x = diff * 4;
-        let s = 1 - abs * 0.14;
-        let o = 1 - abs * 0.32;
-        let b = abs * 0.15;
-        let br = 1 - abs * 0.16;
+    const el = slide.querySelector(isCat ? '.cat-card' : '.product-card');
+    if (!el) return;
 
-        if (abs > 1.9) {
-          o = Math.max(0, 1 - (abs - 1.9) * 3);
-          s = Math.max(0.75, 1 - (abs - 1.9) * 0.8);
-          z = -abs * 38;
-          slide.style.visibility = o > 0.1 ? 'visible' : 'hidden';
-        } else {
-          slide.style.visibility = 'visible';
-          slide.style.pointerEvents = 'auto';
-        }
-
-        el.style.transform = `translateX(${x}px) translateZ(${z}px) rotateY(${rot}deg) scale(${s})`;
-        el.style.opacity = o;
-        el.style.filter = `blur(${b}px) brightness(${br})`;
-
-        if (abs === 0) {
-          el.style.background = getComputedStyle(document.documentElement).getPropertyValue('--active-card-background') || 'rgba(255,255,255,0.1)';
-          el.style.boxShadow = getComputedStyle(document.documentElement).getPropertyValue('--active-card-shadow') || '0 20px 60px rgba(0,0,0,0.95),0 0 0 1px rgba(255,255,255,0.12)';
-          if (!isCat) {
-            const img = el.querySelector('.product-image img');
-            if (img) img.style.transform = 'scale(1.12)';
-          }
-        } else {
-          el.style.background = 'transparent';
-          el.style.boxShadow = 'none';
-          if (!isCat) {
-            const img = el.querySelector('.product-image img');
-            if (img) img.style.transform = 'scale(1)';
-          }
-        }
-      });
+    // على الأجهزة الضعيفة: اشتغل بس حوالين الـ active
+    if (lowEnd && abs > 3) {
+      slide.style.visibility = 'hidden';
+      slide.style.pointerEvents = 'none';
+      el.style.transform = 'none';
+      el.style.opacity = 0;
+      el.style.filter = 'none';
+      el.style.background = 'transparent';
+      el.style.boxShadow = 'none';
+      return;
+    } else {
+      slide.style.visibility = 'visible';
+      slide.style.pointerEvents = 'auto';
     }
 
-    function loadCategory() {
-      const cat = restaurant.categories[currentCat];
-      prodWrapper.innerHTML = '';
+    let rot = diff * 20;
+    let z = -abs * 40;
+    let x = diff * 4;
+    let s = 1 - abs * 0.14;
+    let o = 1 - abs * 0.32;
+    let b = abs * 0.15;
+    let br = 1 - abs * 0.16;
 
-      const repeatTimes = 15;
-      for (let i = 0; i < repeatTimes; i++) {
-        cat.products.forEach(createProd);
+    if (abs > 1.9) {
+      o = Math.max(0, 1 - (abs - 1.9) * 3);
+      s = Math.max(0.75, 1 - (abs - 1.9) * 0.8);
+      z = -abs * 38;
+    }
+
+    el.style.transform = `translateX(${x}px) translateZ(${z}px) rotateY(${rot}deg) scale(${s})`;
+    el.style.opacity = o;
+
+    // blur بس على الأجهزة القوية، عشان الأداء
+    if (lowEnd) {
+      el.style.filter = `brightness(${br})`;
+    } else {
+      el.style.filter = `blur(${b}px) brightness(${br})`;
+    }
+
+    if (abs === 0) {
+      el.style.background = getComputedStyle(document.documentElement).getPropertyValue('--active-card-background') || 'rgba(255,255,255,0.1)';
+      el.style.boxShadow = getComputedStyle(document.documentElement).getPropertyValue('--active-card-shadow') || '0 20px 60px rgba(0,0,0,0.95),0 0 0 1px rgba(255,255,255,0.12)';
+      if (!isCat) {
+        const img = el.querySelector('.product-image img');
+        if (img) img.style.transform = 'scale(1.12)';
       }
-
-      if (prodSwiper) prodSwiper.destroy(true, true);
-
-       prodSwiper = new Swiper('#prodSwiper', {
-        direction: 'vertical',
-        slidesPerView: 5,
-        centeredSlides: true,
-        spaceBetween: 20,
-        loop: true,
-        loopAdditionalSlides: 20,
-        loopedSlides: cat.products.length * 15,
-        speed: 350,
-        allowTouchMove: true,
-        shortSwipes: true,
-        longSwipes: true,
-        longSwipesRatio: 0.3,
-        grabCursor: true,
-        touchRatio: 0.8,
-        threshold: 9,
-        resistance: false,
-        watchSlidesProgress: true,
-        slideToClickedSlide: false,
-        on: {
-          init() { apply3D(this, false) },
-          slideChange() { playSound(); apply3D(this, false) },
-          slideChangeTransitionStart() { apply3D(this, false) },
-          slideChangeTransitionEnd() { apply3D(this, false) },
-          progress() { apply3D(this, false) },
-          setTranslate() { apply3D(this, false) },
-          touchMove() { apply3D(this, false) },
-          tap(s, e) {
-            const sl = e.target.closest('.swiper-slide');
-            if (!sl) return;
-            const card = sl.querySelector('.product-card');
-            if (!card) return;
-            if (sl.classList.contains('swiper-slide-active')) {
-              try {
-                const prod = JSON.parse(card.dataset.prod.replace(/&apos;/g, "'"));
-                showModal(prod);
-              } catch (e) { }
-            } else {
-              const idx = Array.from(s.slides).indexOf(sl);
-              if (idx !== -1) s.slideTo(idx, 300);
-            }
-          }
-        }
-      });
+    } else {
+      el.style.background = 'transparent';
+      el.style.boxShadow = 'none';
+      if (!isCat) {
+        const img = el.querySelector('.product-image img');
+        if (img) img.style.transform = 'scale(1)';
+      }
     }
+  });
+}
+
+function schedule3D(swiper, isCat) {
+  if (!swiper) return;
+
+  if (isCat) {
+    if (rafIdCat) return;
+    rafIdCat = requestAnimationFrame(() => {
+      rafIdCat = null;
+      apply3D(swiper, true);
+    });
+  } else {
+    if (rafIdProd) return;
+    rafIdProd = requestAnimationFrame(() => {
+      rafIdProd = null;
+      apply3D(swiper, false);
+    });
+  }
+}
+
+
+   function loadCategory() {
+  const cat = restaurant.categories[currentCat];
+  prodWrapper.innerHTML = '';
+
+  const lowEnd = document.documentElement.classList.contains('low-end');
+  const repeatTimes = lowEnd ? 4 : 15; // أقل على الأجهزة الضعيفة
+
+  for (let i = 0; i < repeatTimes; i++) {
+    cat.products.forEach(createProd);
+  }
+
+  if (prodSwiper) prodSwiper.destroy(true, true);
+
+  prodSwiper = new Swiper('#prodSwiper', {
+    direction: 'vertical',
+    slidesPerView: 5,
+    centeredSlides: true,
+    spaceBetween: 20,
+    loop: true,
+    loopAdditionalSlides: lowEnd ? 10 : 20,
+    loopedSlides: cat.products.length * repeatTimes,
+    speed: lowEnd ? 320 : 350,
+    allowTouchMove: true,
+    shortSwipes: true,
+    longSwipes: true,
+    longSwipesRatio: 0.3,
+    grabCursor: true,
+    touchRatio: 0.8,
+    threshold: 9,
+    resistance: false,
+    watchSlidesProgress: true,
+    slideToClickedSlide: false,
+    on: {
+      init() { schedule3D(this, false); },
+      slideChange() { playSound(); schedule3D(this, false); },
+      slideChangeTransitionStart() { schedule3D(this, false); },
+      slideChangeTransitionEnd() { schedule3D(this, false); },
+      progress() { schedule3D(this, false); },
+      setTranslate() { schedule3D(this, false); },
+      touchMove() { schedule3D(this, false); },
+      tap(s, e) {
+        const sl = e.target.closest('.swiper-slide');
+        if (!sl) return;
+        const card = sl.querySelector('.product-card');
+        if (!card) return;
+        if (sl.classList.contains('swiper-slide-active')) {
+          try {
+            const prod = JSON.parse(card.dataset.prod.replace(/&apos;/g, "'"));
+            showModal(prod);
+          } catch (e) { }
+        } else {
+          const idx = Array.from(s.slides).indexOf(sl);
+          if (idx !== -1) s.slideTo(idx, 300);
+        }
+      }
+    }
+  });
+}
 
     function loadRestaurant(data) {
       restaurant = data;
@@ -770,54 +849,57 @@
       }
       document.getElementById('restaurantName').textContent = restaurant.name;
 
-      const originalCats = [...restaurant.categories];
-      const repeatCount = 8;
+     const originalCats = [...restaurant.categories];
+const lowEnd = document.documentElement.classList.contains('low-end');
+const repeatCount = lowEnd ? 2 : 8;
 
-      catWrapper.innerHTML = '';
+catWrapper.innerHTML = '';
 
-      for (let i = 0; i < repeatCount; i++) {
-        originalCats.forEach(cat => createCat(cat));
-      }
+for (let i = 0; i < repeatCount; i++) {
+  originalCats.forEach(cat => createCat(cat));
+}
+
 
       if (catSwiper) catSwiper.destroy(true, true);
 
       catSwiper = new Swiper('#catSwiper', {
-        slidesPerView: 5,
-        centeredSlides: true,
-        spaceBetween: 10,
-        loop: true,
-        loopedSlides: originalCats.length * repeatCount,
-        loopAdditionalSlides: 20,
-        speed: 300,
-        grabCursor: true,
-        touchRatio: 1,
-        resistanceRatio: 0,
-        watchSlidesProgress: true,
-        slideToClickedSlide: true,
-        freeMode: false,
-        threshold: 8,
-        on: {
-          init() { apply3D(this, true) },
-          slideChange() {
-            const newCat = this.realIndex % originalCats.length;
-            if (newCat !== currentCat) {
-              currentCat = newCat;
-              playSound();
-              loadCategory();
-            }
-            apply3D(this, true);
-          },
-          progress() { apply3D(this, true) },
-          setTranslate() { apply3D(this, true) },
-          touchMove() { apply3D(this, true) },
-          tap(s, e) {
-            const sl = e.target.closest('.swiper-slide');
-            if (!sl || sl.classList.contains('swiper-slide-active')) return;
-            const idx = Array.from(s.slides).indexOf(sl);
-            if (idx !== -1) s.slideTo(idx, 300);
-          }
-        }
-      });
+  slidesPerView: 5,
+  centeredSlides: true,
+  spaceBetween: 10,
+  loop: true,
+  loopedSlides: originalCats.length * repeatCount,
+  loopAdditionalSlides: lowEnd ? 10 : 20,
+  speed: lowEnd ? 260 : 300,
+  grabCursor: true,
+  touchRatio: 1,
+  resistanceRatio: 0,
+  watchSlidesProgress: true,
+  slideToClickedSlide: true,
+  freeMode: false,
+  threshold: 8,
+  on: {
+    init() { schedule3D(this, true); },
+    slideChange() {
+      const newCat = this.realIndex % originalCats.length;
+      if (newCat !== currentCat) {
+        currentCat = newCat;
+        playSound();
+        loadCategory();
+      }
+      schedule3D(this, true);
+    },
+    progress() { schedule3D(this, true); },
+    setTranslate() { schedule3D(this, true); },
+    touchMove() { schedule3D(this, true); },
+    tap(s, e) {
+      const sl = e.target.closest('.swiper-slide');
+      if (!sl || sl.classList.contains('swiper-slide-active')) return;
+      const idx = Array.from(s.slides).indexOf(sl);
+      if (idx !== -1) s.slideTo(idx, 300);
+    }
+  }
+});
+
 
       loadCategory();
       
@@ -831,7 +913,7 @@
       });
     }
 
-    fetch(`restaurant_${r}.json`)
+    fetch(`assets/data/${restaurantName}.json`)
       .then(res => { if (!res.ok) throw new Error('Not found'); return res.json() })
       .then(loadRestaurant)
       .catch(() => alert('Restaurant not found!'));
