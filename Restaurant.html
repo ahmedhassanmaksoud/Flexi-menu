@@ -19,7 +19,7 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent
+      -webkit-tap-highlight-color: transparent;
     }
 
     body {
@@ -28,7 +28,7 @@
       color: var(--text);
       min-height: 100vh;
       touch-action: pan-y;
-      overflow: hidden
+      overflow: hidden;
     }
 
     body::before {
@@ -51,7 +51,7 @@
       flex-direction: column;
       gap: 4px;
       height: 100vh;
-      overflow: hidden
+      overflow: hidden;
     }
 
     .header {
@@ -70,7 +70,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 6px
+      gap: 6px;
     }
 
     .header-logo {
@@ -100,7 +100,7 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       letter-spacing: -0.03em;
-      text-align: center
+      text-align: center;
     }
 
     .categories {
@@ -153,7 +153,7 @@
       width: 48px;
       height: 48px;
       object-fit: contain;
-      filter: var(--icon-shadow, drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3)))
+      filter: var(--icon-shadow, drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3)));
     }
 
     .cat-name {
@@ -161,7 +161,7 @@
       font-weight: 700;
       color: var(--text-dim);
       text-transform: uppercase;
-      letter-spacing: 0.03em
+      letter-spacing: 0.03em;
     }
 
     .products {
@@ -178,12 +178,18 @@
 
     .products .swiper {
       height: 100%;
-      overflow: hidden
+      overflow: hidden;
     }
 
     .products .swiper-wrapper {
       align-items: center;
-      transform-style: preserve-3d
+      transform-style: preserve-3d;
+    }
+
+    .products .swiper-slide {
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .product-card {
@@ -195,7 +201,9 @@
       transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
       cursor: pointer;
       transform-style: preserve-3d;
-      backface-visibility: hidden
+      backface-visibility: hidden;
+      width: calc(100% - 24px);
+      max-width: 380px;
     }
 
     .product-image {
@@ -203,20 +211,21 @@
       height: 80px;
       border-radius: 16px;
       overflow: hidden;
-      box-shadow: var(--product-image-shadow, 0 10px 30px rgba(0, 0, 0, 0.8))
+      box-shadow: var(--product-image-shadow, 0 10px 30px rgba(0, 0, 0, 0.8));
+      flex-shrink: 0;
     }
 
     .product-image img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: transform 0.25s ease
+      transition: transform 0.25s ease;
     }
 
     .product-name {
       font-size: 15px;
       font-weight: 800;
-      line-height: 1.3
+      line-height: 1.3;
     }
 
     .product-desc {
@@ -226,7 +235,7 @@
       -webkit-line-clamp: 2;
       display: -webkit-box;
       -webkit-box-orient: vertical;
-      overflow: hidden
+      overflow: hidden;
     }
 
     .product-price {
@@ -234,7 +243,8 @@
       font-weight: 900;
       background: var(--price-gradient, linear-gradient(135deg, var(--gold), #f59e0b));
       -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent
+      -webkit-text-fill-color: transparent;
+      white-space: nowrap;
     }
 
     .modal {
@@ -247,20 +257,20 @@
       align-items: center;
       justify-content: center;
       animation: fadeIn 0.2s ease;
-      padding: 20px
+      padding: 20px;
     }
 
     .modal.active {
-      display: flex
+      display: flex;
     }
 
     @keyframes fadeIn {
       from {
-        opacity: 0
+        opacity: 0;
       }
 
       to {
-        opacity: 1
+        opacity: 1;
       }
     }
 
@@ -273,18 +283,19 @@
       max-height: 80vh;
       overflow-y: auto;
       animation: scaleIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      position: relative
+      position: relative;
+      border: 1px solid var(--border);
     }
 
     @keyframes scaleIn {
       from {
         transform: scale(0.9);
-        opacity: 0
+        opacity: 0;
       }
 
       to {
         transform: scale(1);
-        opacity: 1
+        opacity: 1;
       }
     }
 
@@ -303,17 +314,17 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: background 0.2s
+      transition: background 0.2s;
     }
 
     .modal-close:active {
-      background: var(--modal-close-active, rgba(255, 255, 255, 0.2))
+      background: var(--modal-close-active, rgba(255, 255, 255, 0.2));
     }
 
     .modal-header {
       display: flex;
       gap: 16px;
-      margin-bottom: 23px
+      margin-bottom: 23px;
     }
 
     .modal-image {
@@ -321,25 +332,26 @@
       height: 100px;
       border-radius: 18px;
       overflow: hidden;
-      box-shadow: var(--modal-image-shadow, 0 10px 40px rgba(0, 0, 0, 0.8))
+      box-shadow: var(--modal-image-shadow, 0 10px 40px rgba(0, 0, 0, 0.8));
+      flex-shrink: 0;
     }
 
     .modal-image img {
       width: 100%;
       height: 100%;
-      object-fit: cover
+      object-fit: cover;
     }
 
     .modal-title {
       font-size: 22px;
       font-weight: 900;
-      margin: 12px 0 8px
+      margin: 12px 0 8px;
     }
 
     .modal-rating {
       color: var(--gold);
       font-size: 16px;
-      margin-bottom: 8px
+      margin-bottom: 8px;
     }
 
     .modal-price {
@@ -347,14 +359,14 @@
       font-weight: 900;
       background: var(--price-gradient, linear-gradient(135deg, var(--gold), #f59e0b));
       -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent
+      -webkit-text-fill-color: transparent;
     }
 
     .modal-info {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 12px;
-      margin: 20px 0
+      margin: 20px 0;
     }
 
     .info-card {
@@ -362,19 +374,19 @@
       border: 1px solid var(--info-card-border, rgba(255, 255, 255, 0.12));
       border-radius: 14px;
       padding: 14px;
-      text-align: center
+      text-align: center;
     }
 
     .info-label {
       font-size: 11px;
       color: var(--text-dim);
       text-transform: uppercase;
-      margin-bottom: 6px
+      margin-bottom: 6px;
     }
 
     .info-value {
       font-size: 17px;
-      font-weight: 800
+      font-weight: 800;
     }
 
     .modal-section-title {
@@ -382,13 +394,13 @@
       font-weight: 700;
       color: var(--text-dim);
       margin: 20px 0 12px;
-      text-transform: uppercase
+      text-transform: uppercase;
     }
 
     .ingredients-list {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px
+      gap: 10px;
     }
 
     .ingredient-tag {
@@ -397,22 +409,22 @@
       border: 1px solid var(--ingredient-tag-border, rgba(255, 255, 255, 0.14));
       border-radius: 12px;
       font-size: 12px;
-      font-weight: 600
+      font-weight: 600;
     }
 
     .skeleton {
       background: var(--skeleton-bg, linear-gradient(90deg, rgba(255, 255, 255, 0.05) 25%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0.05) 75%));
       background-size: 200% 100%;
-      animation: shimmer 1.5s infinite
+      animation: shimmer 1.5s infinite;
     }
 
     @keyframes shimmer {
       0% {
-        background-position: 200% 0
+        background-position: 200% 0;
       }
 
       100% {
-        background-position: -200% 0
+        background-position: -200% 0;
       }
     }
 
@@ -420,13 +432,13 @@
       display: flex;
       gap: 12px;
       padding: 12px 14px;
-      margin: 8px 0
+      margin: 8px 0;
     }
 
     .skeleton-img {
       width: 80px;
       height: 80px;
-      border-radius: 16px
+      border-radius: 16px;
     }
 
     .skeleton-text {
@@ -434,38 +446,38 @@
       display: flex;
       flex-direction: column;
       gap: 8px;
-      justify-content: center
+      justify-content: center;
     }
 
     .skeleton-line {
       height: 14px;
-      border-radius: 4px
+      border-radius: 4px;
     }
 
     .skeleton-line.w-60 {
-      width: 60%
+      width: 60%;
     }
 
     .skeleton-line.w-40 {
-      width: 40%
+      width: 40%;
     }
 
-    @media (max-height:640px) {
+    @media (max-height: 640px) {
       .app {
-        padding: 100px 16px 16px
+        padding: 100px 16px 16px;
       }
 
       .header-title {
-        font-size: 20px
+        font-size: 20px;
       }
 
       .categories {
-        height: 90px
+        height: 90px;
       }
 
       .cat-icon {
         width: 42px;
-        height: 42px
+        height: 42px;
       }
     }
 
@@ -479,28 +491,31 @@
         gap: 14px;
       }
     }
-    /* وضع للأجهزة الضعيفة / أندرويد القديم */
-.low-end .header,
-.low-end .categories,
-.low-end .products {
-  backdrop-filter: none;
-  box-shadow: none;
-  background: #050509;
-}
 
-.low-end .product-card,
-.low-end .cat-card {
-  filter: none !important;
-  box-shadow: none !important;
-  transform: none !important;
-}
+    /* وضع للأجهزة الضعيفة */
+    .low-end body::before {
+      content: none;
+      display: none;
+    }
 
-.low-end .products,
-.low-end .categories,
-.low-end .header {
-  border-radius: 12px;
-}
+    .low-end .header,
+    .low-end .categories,
+    .low-end .products {
+      backdrop-filter: none;
+      box-shadow: none;
+      background: #050509;
+      border-radius: 16px;
+    }
 
+    .low-end .product-card,
+    .low-end .cat-card {
+      box-shadow: none !important;
+    }
+
+    .low-end .product-image,
+    .low-end .modal-image {
+      box-shadow: none !important;
+    }
   </style>
 </head>
 
@@ -565,37 +580,73 @@
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script>
     let audioCtx, lastFeedback = 0, restaurant, catSwiper, prodSwiper, currentCat = 0;
-    const catWrapper = document.getElementById('catWrapper'), prodWrapper = document.getElementById('prodWrapper'), modal = document.getElementById('modal');
-    // متغيّرات لجدولة الـ 3D updates
-    let rafIdCat = null;
-    let rafIdProd = null;
+    let rafIdCat = null, rafIdProd = null;
 
-    function initAudio() { 
-      if (!audioCtx) { 
+    const catWrapper = document.getElementById('catWrapper');
+    const prodWrapper = document.getElementById('prodWrapper');
+    const modal = document.getElementById('modal');
+
+    // ---------- helpers: query params + low-end detection ----------
+
+    function getQueryParam(key) {
+      if (!location.search) return null;
+
+      if (window.URLSearchParams) {
+        try {
+          const params = new URLSearchParams(location.search);
+          return params.get(key);
+        } catch (e) { }
+      }
+
+      const query = location.search.substring(1).split('&');
+      for (let i = 0; i < query.length; i++) {
+        const part = query[i].split('=');
+        const k = decodeURIComponent(part[0] || '');
+        const v = decodeURIComponent((part[1] || '').replace(/\+/g, ' '));
+        if (k === key) return v;
+      }
+      return null;
+    }
+
+    const simpleMode = getQueryParam('simple') === '1';
+    const isLowEndAndroid = simpleMode || (
+      /Android/i.test(navigator.userAgent) &&
+      (navigator.hardwareConcurrency || 4) <= 4
+    );
+
+    if (isLowEndAndroid) {
+      document.documentElement.classList.add('low-end');
+    }
+
+    const restaurantName = getQueryParam('restaurant') || 'ecuador';
+
+    // ---------- audio (disabled على low-end) ----------
+
+    function initAudio() {
+      if (document.documentElement.classList.contains('low-end')) return;
+      if (!audioCtx) {
         audioCtx = new (window.AudioContext || window.webkitAudioContext)();
       }
-      if (audioCtx.state === 'suspended') {
+      if (audioCtx && audioCtx.state === 'suspended') {
         audioCtx.resume();
       }
     }
 
     function playSound() {
+      if (document.documentElement.classList.contains('low-end')) return;
+
       if (!audioCtx) {
         initAudio();
       }
-      
-      if (audioCtx && audioCtx.state === 'suspended') {
-        audioCtx.resume();
-      }
-      
       if (!audioCtx || audioCtx.state !== 'running') return;
-      
-      const now = performance.now();
+
+      const now = (window.performance && performance.now) ? performance.now() : Date.now();
       if (now - lastFeedback < 50) return;
       lastFeedback = now;
 
       try {
-        const osc = audioCtx.createOscillator(), gain = audioCtx.createGain();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
         osc.type = 'sine';
         osc.frequency.setValueAtTime(1519.91, audioCtx.currentTime);
         osc.frequency.exponentialRampToValueAtTime(1200, audioCtx.currentTime + 0.01);
@@ -608,10 +659,12 @@
         osc.stop(audioCtx.currentTime + 0.025);
 
         if (navigator.vibrate) navigator.vibrate(2);
-      } catch (e) { 
+      } catch (e) {
         console.error('Audio error:', e);
       }
     }
+
+    // ---------- modal ----------
 
     function showModal(prod) {
       document.getElementById('modalImg').src = prod.image;
@@ -621,6 +674,7 @@
       document.getElementById('modalCalories').textContent = prod.calories || '—';
       document.getElementById('modalTime').textContent = prod.time || '—';
       document.getElementById('modalDesc').textContent = prod.description || '';
+
       const list = document.getElementById('modalIngredients');
       list.innerHTML = '';
       (prod.ingredients || []).forEach(i => {
@@ -629,211 +683,214 @@
         tag.textContent = i;
         list.appendChild(tag);
       });
+
       modal.classList.add('active');
     }
 
-    function hideModal() { modal.classList.remove('active') }
+    function hideModal() { modal.classList.remove('active'); }
 
     document.getElementById('modalClose').onclick = hideModal;
-    modal.onclick = e => { if (e.target === modal) hideModal() };
+    modal.onclick = e => { if (e.target === modal) hideModal(); };
 
-   const params = new URLSearchParams(location.search);
-const r = params.get("r") || "1";
-const simpleMode = params.get("simple") === "1";
-
-// كشف الأجهزة الضعيفة (أندرويد قديم أو إجبار بـ simple=1)
-const isLowEndAndroid = simpleMode || (
-  /Android/i.test(navigator.userAgent) &&
-  (navigator.hardwareConcurrency || 4) <= 4
-);
-
-if (isLowEndAndroid) {
-  document.documentElement.classList.add('low-end');
-}
-
-const restaurantName = params.get("restaurant") || "ecuador";
+    // ---------- DOM builders ----------
 
     function createCat(cat) {
       const slide = document.createElement('div');
       slide.className = 'swiper-slide';
-      slide.innerHTML = `<div class="cat-card"><img src="${cat.icon}" alt="${cat.name}" class="cat-icon"><div class="cat-name">${cat.name}</div></div>`;
+      slide.innerHTML = `
+        <div class="cat-card">
+          <img src="${cat.icon}" alt="${cat.name}" class="cat-icon">
+          <div class="cat-name">${cat.name}</div>
+        </div>`;
       catWrapper.appendChild(slide);
     }
 
     function createProd(prod) {
       const slide = document.createElement('div');
       slide.className = 'swiper-slide';
-      slide.innerHTML = `<div class="product-card" data-prod='${JSON.stringify(prod).replace(/'/g, "&apos;")}'>
-        <div class="product-image"><img src="${prod.image}" alt="${prod.name}" loading="lazy"></div>
-        <div style="flex:1">
-          <div class="product-name">${prod.name}</div>
-          <div class="product-desc">${prod.description}</div>
-        </div>
-        <div class="product-price">${prod.price.toFixed(2)} EGP</div>
-      </div>`;
+      slide.innerHTML = `
+        <div class="product-card" data-prod='${JSON.stringify(prod).replace(/'/g, "&apos;")}'>
+          <div class="product-image">
+            <img src="${prod.image}" alt="${prod.name}" loading="lazy">
+          </div>
+          <div style="flex:1">
+            <div class="product-name">${prod.name}</div>
+            <div class="product-desc">${prod.description || ''}</div>
+          </div>
+          <div class="product-price">${prod.price.toFixed(2)} EGP</div>
+        </div>`;
       prodWrapper.appendChild(slide);
     }
 
+    // ---------- 3D wheel ----------
+
     function apply3D(swiper, isCat) {
-  if (!swiper || !swiper.slides || swiper.slides.length === 0) return;
-  const slides = swiper.slides;
-  const active = swiper.activeIndex;
-  const total = slides.length;
-  const lowEnd = document.documentElement.classList.contains('low-end');
+      if (!swiper || !swiper.slides || swiper.slides.length === 0) return;
+      const slides = swiper.slides;
+      const active = swiper.activeIndex;
+      const total = slides.length;
+      const lowEnd = document.documentElement.classList.contains('low-end');
 
-  slides.forEach((slide, i) => {
-    let diff = i - active;
+      for (let i = 0; i < slides.length; i++) {
+        const slide = slides[i];
+        let diff = i - active;
 
-    if (diff > total / 2) { diff -= total; }
-    else if (diff < -total / 2) { diff += total; }
+        if (diff > total / 2) diff -= total;
+        else if (diff < -total / 2) diff += total;
 
-    const abs = Math.abs(diff);
+        const abs = Math.abs(diff);
+        const el = slide.querySelector(isCat ? '.cat-card' : '.product-card');
+        if (!el) continue;
 
-    const el = slide.querySelector(isCat ? '.cat-card' : '.product-card');
-    if (!el) return;
-
-    // على الأجهزة الضعيفة: اشتغل بس حوالين الـ active
-    if (lowEnd && abs > 3) {
-      slide.style.visibility = 'hidden';
-      slide.style.pointerEvents = 'none';
-      el.style.transform = 'none';
-      el.style.opacity = 0;
-      el.style.filter = 'none';
-      el.style.background = 'transparent';
-      el.style.boxShadow = 'none';
-      return;
-    } else {
-      slide.style.visibility = 'visible';
-      slide.style.pointerEvents = 'auto';
-    }
-
-    let rot = diff * 20;
-    let z = -abs * 40;
-    let x = diff * 4;
-    let s = 1 - abs * 0.14;
-    let o = 1 - abs * 0.32;
-    let b = abs * 0.15;
-    let br = 1 - abs * 0.16;
-
-    if (abs > 1.9) {
-      o = Math.max(0, 1 - (abs - 1.9) * 3);
-      s = Math.max(0.75, 1 - (abs - 1.9) * 0.8);
-      z = -abs * 38;
-    }
-
-    el.style.transform = `translateX(${x}px) translateZ(${z}px) rotateY(${rot}deg) scale(${s})`;
-    el.style.opacity = o;
-
-    // blur بس على الأجهزة القوية، عشان الأداء
-    if (lowEnd) {
-      el.style.filter = `brightness(${br})`;
-    } else {
-      el.style.filter = `blur(${b}px) brightness(${br})`;
-    }
-
-    if (abs === 0) {
-      el.style.background = getComputedStyle(document.documentElement).getPropertyValue('--active-card-background') || 'rgba(255,255,255,0.1)';
-      el.style.boxShadow = getComputedStyle(document.documentElement).getPropertyValue('--active-card-shadow') || '0 20px 60px rgba(0,0,0,0.95),0 0 0 1px rgba(255,255,255,0.12)';
-      if (!isCat) {
-        const img = el.querySelector('.product-image img');
-        if (img) img.style.transform = 'scale(1.12)';
-      }
-    } else {
-      el.style.background = 'transparent';
-      el.style.boxShadow = 'none';
-      if (!isCat) {
-        const img = el.querySelector('.product-image img');
-        if (img) img.style.transform = 'scale(1)';
-      }
-    }
-  });
-}
-
-function schedule3D(swiper, isCat) {
-  if (!swiper) return;
-
-  if (isCat) {
-    if (rafIdCat) return;
-    rafIdCat = requestAnimationFrame(() => {
-      rafIdCat = null;
-      apply3D(swiper, true);
-    });
-  } else {
-    if (rafIdProd) return;
-    rafIdProd = requestAnimationFrame(() => {
-      rafIdProd = null;
-      apply3D(swiper, false);
-    });
-  }
-}
-
-
-   function loadCategory() {
-  const cat = restaurant.categories[currentCat];
-  prodWrapper.innerHTML = '';
-
-  const lowEnd = document.documentElement.classList.contains('low-end');
-  const repeatTimes = lowEnd ? 4 : 15; // أقل على الأجهزة الضعيفة
-
-  for (let i = 0; i < repeatTimes; i++) {
-    cat.products.forEach(createProd);
-  }
-
-  if (prodSwiper) prodSwiper.destroy(true, true);
-
-  prodSwiper = new Swiper('#prodSwiper', {
-    direction: 'vertical',
-    slidesPerView: 5,
-    centeredSlides: true,
-    spaceBetween: 20,
-    loop: true,
-    loopAdditionalSlides: lowEnd ? 10 : 20,
-    loopedSlides: cat.products.length * repeatTimes,
-    speed: lowEnd ? 320 : 350,
-    allowTouchMove: true,
-    shortSwipes: true,
-    longSwipes: true,
-    longSwipesRatio: 0.3,
-    grabCursor: true,
-    touchRatio: 0.8,
-    threshold: 9,
-    resistance: false,
-    watchSlidesProgress: true,
-    slideToClickedSlide: false,
-    on: {
-      init() { schedule3D(this, false); },
-      slideChange() { playSound(); schedule3D(this, false); },
-      slideChangeTransitionStart() { schedule3D(this, false); },
-      slideChangeTransitionEnd() { schedule3D(this, false); },
-      progress() { schedule3D(this, false); },
-      setTranslate() { schedule3D(this, false); },
-      touchMove() { schedule3D(this, false); },
-      tap(s, e) {
-        const sl = e.target.closest('.swiper-slide');
-        if (!sl) return;
-        const card = sl.querySelector('.product-card');
-        if (!card) return;
-        if (sl.classList.contains('swiper-slide-active')) {
-          try {
-            const prod = JSON.parse(card.dataset.prod.replace(/&apos;/g, "'"));
-            showModal(prod);
-          } catch (e) { }
+        // على الأجهزة الضعيفة: نشتغل بس حوالين الـ active
+        if (lowEnd && abs > 3) {
+          slide.style.visibility = 'hidden';
+          slide.style.pointerEvents = 'none';
+          el.style.transform = 'none';
+          el.style.opacity = 0;
+          el.style.filter = 'none';
+          el.style.background = 'transparent';
+          el.style.boxShadow = 'none';
+          continue;
         } else {
-          const idx = Array.from(s.slides).indexOf(sl);
-          if (idx !== -1) s.slideTo(idx, 300);
+          slide.style.visibility = 'visible';
+          slide.style.pointerEvents = 'auto';
+        }
+
+        let rot = diff * 20;
+        let z = -abs * 40;
+        let x = diff * 4;
+        let s = 1 - abs * 0.14;
+        let o = 1 - abs * 0.32;
+        let b = abs * 0.15;
+        let br = 1 - abs * 0.16;
+
+        if (abs > 1.9) {
+          o = Math.max(0, 1 - (abs - 1.9) * 3);
+          s = Math.max(0.75, 1 - (abs - 1.9) * 0.8);
+          z = -abs * 38;
+        }
+
+        el.style.transform = `translateX(${x}px) translateZ(${z}px) rotateY(${rot}deg) scale(${s})`;
+        el.style.opacity = o;
+
+        if (lowEnd) {
+          el.style.filter = `brightness(${br})`;
+        } else {
+          el.style.filter = `blur(${b}px) brightness(${br})`;
+        }
+
+        if (abs === 0) {
+          el.style.background = getComputedStyle(document.documentElement).getPropertyValue('--active-card-background') || 'rgba(255,255,255,0.1)';
+          el.style.boxShadow = getComputedStyle(document.documentElement).getPropertyValue('--active-card-shadow') || '0 20px 60px rgba(0,0,0,0.95),0 0 0 1px rgba(255,255,255,0.12)';
+          if (!isCat) {
+            const img = el.querySelector('.product-image img');
+            if (img) img.style.transform = 'scale(1.12)';
+          }
+        } else {
+          el.style.background = 'transparent';
+          el.style.boxShadow = 'none';
+          if (!isCat) {
+            const img = el.querySelector('.product-image img');
+            if (img) img.style.transform = 'scale(1)';
+          }
         }
       }
     }
-  });
-}
+
+    function schedule3D(swiper, isCat) {
+      if (!swiper) return;
+      const lowEnd = document.documentElement.classList.contains('low-end');
+
+      // على الأجهزة الضعيفة برضه نستخدم raf عشان نقلل الحسابات
+      if (isCat) {
+        if (rafIdCat) return;
+        rafIdCat = requestAnimationFrame(() => {
+          rafIdCat = null;
+          apply3D(swiper, true);
+        });
+      } else {
+        if (rafIdProd) return;
+        rafIdProd = requestAnimationFrame(() => {
+          rafIdProd = null;
+          apply3D(swiper, false);
+        });
+      }
+    }
+
+    // ---------- Swipers ----------
+
+    function loadCategory() {
+      const cat = restaurant.categories[currentCat];
+      if (!cat) return;
+
+      prodWrapper.innerHTML = '';
+
+      const lowEnd = document.documentElement.classList.contains('low-end');
+      const repeatTimes = lowEnd ? 4 : 12; // أقل للأجهزة الضعيفة
+
+      for (let i = 0; i < repeatTimes; i++) {
+        cat.products.forEach(createProd);
+      }
+
+      if (prodSwiper) prodSwiper.destroy(true, true);
+
+      prodSwiper = new Swiper('#prodSwiper', {
+        direction: 'vertical',
+        slidesPerView: 5,
+        centeredSlides: true,
+        spaceBetween: 20,
+        loop: true,
+        loopAdditionalSlides: lowEnd ? 10 : 20,
+        loopedSlides: cat.products.length * repeatTimes,
+        speed: lowEnd ? 320 : 380,
+        allowTouchMove: true,
+        shortSwipes: true,
+        longSwipes: true,
+        longSwipesRatio: 0.3,
+        grabCursor: true,
+        touchRatio: 0.8,
+        threshold: 9,
+        resistance: false,
+        watchSlidesProgress: true,
+        slideToClickedSlide: false,
+        on: {
+          init() { schedule3D(this, false); },
+          slideChange() { playSound(); schedule3D(this, false); },
+          slideChangeTransitionStart() { schedule3D(this, false); },
+          slideChangeTransitionEnd() { schedule3D(this, false); },
+          progress() { schedule3D(this, false); },
+          setTranslate() { schedule3D(this, false); },
+          touchMove() { schedule3D(this, false); },
+          tap(swiper, e) {
+            const sl = e.target.closest('.swiper-slide');
+            if (!sl) return;
+            const card = sl.querySelector('.product-card');
+            if (!card) return;
+
+            if (sl.classList.contains('swiper-slide-active')) {
+              try {
+                const prod = JSON.parse(card.dataset.prod.replace(/&apos;/g, "'"));
+                showModal(prod);
+              } catch (err) { }
+            } else {
+              const idx = Array.from(swiper.slides).indexOf(sl);
+              if (idx !== -1) swiper.slideTo(idx, 300);
+            }
+          }
+        }
+      });
+    }
 
     function loadRestaurant(data) {
       restaurant = data;
-      const t = restaurant.theme;
+      const t = restaurant.theme || {};
+
       for (let k in t) {
         const prop = k.replace(/([A-Z])/g, '-$1').toLowerCase();
         document.documentElement.style.setProperty(`--${prop}`, t[k]);
       }
+
       if (t.font && t.font !== 'Inter') {
         const link = document.createElement('link');
         link.href = `https://fonts.googleapis.com/css2?family=${t.font.replace(' ', '+')}:wght@400;700;900&display=swap`;
@@ -841,71 +898,70 @@ function schedule3D(swiper, isCat) {
         document.head.appendChild(link);
         document.body.style.fontFamily = t.font + ',sans-serif';
       }
+
       const logoEl = document.getElementById('logo');
       if (restaurant.logoImage) {
         logoEl.innerHTML = `<img src="${restaurant.logoImage}" alt="${restaurant.name}">`;
       } else {
-        logoEl.textContent = restaurant.logo;
+        logoEl.textContent = restaurant.logo || '';
       }
-      document.getElementById('restaurantName').textContent = restaurant.name;
+      document.getElementById('restaurantName').textContent = restaurant.name || 'Restaurant';
 
-     const originalCats = [...restaurant.categories];
-const lowEnd = document.documentElement.classList.contains('low-end');
-const repeatCount = lowEnd ? 2 : 8;
+      const originalCats = [...restaurant.categories];
+      const lowEnd = document.documentElement.classList.contains('low-end');
+      const repeatCount = lowEnd ? 2 : 8;
 
-catWrapper.innerHTML = '';
-
-for (let i = 0; i < repeatCount; i++) {
-  originalCats.forEach(cat => createCat(cat));
-}
-
+      catWrapper.innerHTML = '';
+      for (let i = 0; i < repeatCount; i++) {
+        originalCats.forEach(cat => createCat(cat));
+      }
 
       if (catSwiper) catSwiper.destroy(true, true);
 
       catSwiper = new Swiper('#catSwiper', {
-  slidesPerView: 5,
-  centeredSlides: true,
-  spaceBetween: 10,
-  loop: true,
-  loopedSlides: originalCats.length * repeatCount,
-  loopAdditionalSlides: lowEnd ? 10 : 20,
-  speed: lowEnd ? 260 : 300,
-  grabCursor: true,
-  touchRatio: 1,
-  resistanceRatio: 0,
-  watchSlidesProgress: true,
-  slideToClickedSlide: true,
-  freeMode: false,
-  threshold: 8,
-  on: {
-    init() { schedule3D(this, true); },
-    slideChange() {
-      const newCat = this.realIndex % originalCats.length;
-      if (newCat !== currentCat) {
-        currentCat = newCat;
-        playSound();
-        loadCategory();
-      }
-      schedule3D(this, true);
-    },
-    progress() { schedule3D(this, true); },
-    setTranslate() { schedule3D(this, true); },
-    touchMove() { schedule3D(this, true); },
-    tap(s, e) {
-      const sl = e.target.closest('.swiper-slide');
-      if (!sl || sl.classList.contains('swiper-slide-active')) return;
-      const idx = Array.from(s.slides).indexOf(sl);
-      if (idx !== -1) s.slideTo(idx, 300);
-    }
-  }
-});
+        slidesPerView: 5,
+        centeredSlides: true,
+        spaceBetween: 10,
+        loop: true,
+        loopedSlides: originalCats.length * repeatCount,
+        loopAdditionalSlides: lowEnd ? 10 : 20,
+        speed: lowEnd ? 260 : 300,
+        grabCursor: true,
+        touchRatio: 1,
+        resistanceRatio: 0,
+        watchSlidesProgress: true,
+        slideToClickedSlide: true,
+        freeMode: false,
+        threshold: 8,
+        on: {
+          init() { schedule3D(this, true); },
+          slideChange() {
+            const newCat = this.realIndex % originalCats.length;
+            if (newCat !== currentCat) {
+              currentCat = newCat;
+              playSound();
+              loadCategory();
+            }
+            schedule3D(this, true);
+          },
+          progress() { schedule3D(this, true); },
+          setTranslate() { schedule3D(this, true); },
+          touchMove() { schedule3D(this, true); },
+          tap(swiper, e) {
+            const sl = e.target.closest('.swiper-slide');
+            if (!sl || sl.classList.contains('swiper-slide-active')) return;
+            const idx = Array.from(swiper.slides).indexOf(sl);
+            if (idx !== -1) swiper.slideTo(idx, 300);
+          }
+        }
+      });
 
-
+      currentCat = 0;
       loadCategory();
-      
+
       document.addEventListener('click', initAudio, { once: true });
       document.addEventListener('touchstart', initAudio, { once: true });
-      
+
       document.addEventListener('visibilitychange', () => {
         if (!document.hidden && audioCtx) {
           audioCtx.resume();
@@ -913,10 +969,73 @@ for (let i = 0; i < repeatCount; i++) {
       });
     }
 
-    fetch(`assets/data/${restaurantName}.json`)
-      .then(res => { if (!res.ok) throw new Error('Not found'); return res.json() })
-      .then(loadRestaurant)
-      .catch(() => alert('Restaurant not found!'));
+    // ---------- JSON loading (fetch + XHR fallback + مسارات متعددة) ----------
+
+    function fetchJson(url) {
+      if (window.fetch) {
+        return fetch(url).then(function (res) {
+          if (!res.ok) throw new Error('HTTP ' + res.status);
+          return res.json();
+        });
+      }
+
+      return new Promise(function (resolve, reject) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', url, true);
+        xhr.responseType = 'json';
+        xhr.onload = function () {
+          if (xhr.status >= 200 && xhr.status < 300) {
+            if (xhr.response) {
+              resolve(xhr.response);
+            } else {
+              try {
+                resolve(JSON.parse(xhr.responseText));
+              } catch (e) {
+                reject(e);
+              }
+            }
+          } else {
+            reject(new Error('HTTP ' + xhr.status));
+          }
+        };
+        xhr.onerror = function () {
+          reject(new Error('Network error'));
+        };
+        xhr.send();
+      });
+    }
+
+    function loadRestaurantFromFiles(name) {
+      var paths = [
+        'assets/data/' + name + '.json',
+        name + '.json'
+      ];
+      var index = 0;
+
+      function tryNext() {
+        if (index >= paths.length) {
+          throw new Error('No JSON file found for ' + name);
+        }
+        var url = paths[index++];
+        console.log('Trying JSON:', url);
+        return fetchJson(url).catch(function (err) {
+          console.log('Failed to load', url, err);
+          return tryNext();
+        });
+      }
+
+      return tryNext();
+    }
+
+    loadRestaurantFromFiles(restaurantName)
+      .then(function (data) {
+        console.log('Restaurant loaded:', restaurantName);
+        loadRestaurant(data);
+      })
+      .catch(function (err) {
+        console.error('Error loading restaurant JSON:', err);
+        alert('Restaurant not found!');
+      });
   </script>
 </body>
 
