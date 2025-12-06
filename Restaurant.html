@@ -516,7 +516,7 @@
     <div class="modal-content">
       <button class="modal-close" id="modalClose">×</button>
       <div class="modal-header">
-        <div class="modal-image"><img id="modalImg" src="" alt=""></div>
+        <div class="modal-image"><img id="modalImg" src="" alt="" decoding="async"></div>
         <div style="flex:1">
           <div class="modal-title" id="modalTitle">Product</div>
           <div class="modal-rating">⭐ <span id="modalRating">4.8</span></div>
@@ -543,10 +543,37 @@
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script>
     let audioCtx, lastFeedback = 0, restaurant, catSwiper, prodSwiper, currentCat = 0;
-    const catWrapper = document.getElementById('catWrapper'), prodWrapper = document.getElementById('prodWrapper'), modal = document.getElementById('modal');
+    const catWrapper = document.getElementById('catWrapper'),
+      prodWrapper = document.getElementById('prodWrapper'),
+      modal = document.getElementById('modal');
 
-    function initAudio() { 
-      if (!audioCtx) { 
+    const docEl = document.documentElement;
+    let activeCardBg = 'rgba(255,255,255,0.1)';
+    let activeCardShadow = '0 20px 60px rgba(0,0,0,0.95),0 0 0 1px rgba(255,255,255,0.12)';
+
+    function updateActiveCardStyles() {
+      const cs = getComputedStyle(docEl);
+      activeCardBg = cs.getPropertyValue('--active-card-background') || activeCardBg;
+      activeCardShadow = cs.getPropertyValue('--active-card-shadow') || activeCardShadow;
+    }
+
+    let apply3DQueued = false;
+    let last3DArgs = null;
+
+    function scheduleApply3D(swiper, isCat) {
+      if (!swiper || !swiper.slides || swiper.slides.length === 0) return;
+      last3DArgs = { swiper, isCat };
+      if (apply3DQueued) return;
+      apply3DQueued = true;
+      requestAnimationFrame(() => {
+        apply3DQueued = false;
+        if (!last3DArgs) return;
+        apply3D(last3DArgs.swiper, last3DArgs.isCat);
+      });
+    }
+
+    function initAudio() {
+      if (!audioCtx) {
         audioCtx = new (window.AudioContext || window.webkitAudioContext)();
       }
       if (audioCtx.state === 'suspended') {
@@ -558,13 +585,13 @@
       if (!audioCtx) {
         initAudio();
       }
-      
+
       if (audioCtx && audioCtx.state === 'suspended') {
         audioCtx.resume();
       }
-      
+
       if (!audioCtx || audioCtx.state !== 'running') return;
-      
+
       const now = performance.now();
       if (now - lastFeedback < 50) return;
       lastFeedback = now;
@@ -583,7 +610,7 @@
         osc.stop(audioCtx.currentTime + 0.025);
 
         if (navigator.vibrate) navigator.vibrate(2);
-      } catch (e) { 
+      } catch (e) {
         console.error('Audio error:', e);
       }
     }
@@ -621,11 +648,11 @@
       catWrapper.appendChild(slide);
     }
 
-    function createProd(prod) {
+    function createProd(prod, index) {
       const slide = document.createElement('div');
       slide.className = 'swiper-slide';
-      slide.innerHTML = `<div class="product-card" data-prod='${JSON.stringify(prod).replace(/'/g, "&apos;")}'>
-        <div class="product-image"><img src="${prod.image}" alt="${prod.name}" loading="lazy"></div>
+      slide.innerHTML = `<div class="product-card" data-index="${index}">
+        <div class="product-image"><img src="${prod.image}" alt="${prod.name}" loading="lazy" decoding="async"></div>
         <div style="flex:1">
           <div class="product-name">${prod.name}</div>
           <div class="product-desc">${prod.description}</div>
@@ -674,8 +701,8 @@
         el.style.filter = `blur(${b}px) brightness(${br})`;
 
         if (abs === 0) {
-          el.style.background = getComputedStyle(document.documentElement).getPropertyValue('--active-card-background') || 'rgba(255,255,255,0.1)';
-          el.style.boxShadow = getComputedStyle(document.documentElement).getPropertyValue('--active-card-shadow') || '0 20px 60px rgba(0,0,0,0.95),0 0 0 1px rgba(255,255,255,0.12)';
+          el.style.background = activeCardBg;
+          el.style.boxShadow = activeCardShadow;
           if (!isCat) {
             const img = el.querySelector('.product-image img');
             if (img) img.style.transform = 'scale(1.12)';
@@ -697,12 +724,12 @@
 
       const repeatTimes = 15;
       for (let i = 0; i < repeatTimes; i++) {
-        cat.products.forEach(createProd);
+        cat.products.forEach((prod, idx) => createProd(prod, idx));
       }
 
       if (prodSwiper) prodSwiper.destroy(true, true);
 
-       prodSwiper = new Swiper('#prodSwiper', {
+      prodSwiper = new Swiper('#prodSwiper', {
         direction: 'vertical',
         slidesPerView: 5,
         centeredSlides: true,
@@ -722,23 +749,26 @@
         watchSlidesProgress: true,
         slideToClickedSlide: false,
         on: {
-          init() { apply3D(this, false) },
-          slideChange() { playSound(); apply3D(this, false) },
-          slideChangeTransitionStart() { apply3D(this, false) },
-          slideChangeTransitionEnd() { apply3D(this, false) },
-          progress() { apply3D(this, false) },
-          setTranslate() { apply3D(this, false) },
-          touchMove() { apply3D(this, false) },
+          init() { scheduleApply3D(this, false); },
+          slideChange() {
+            playSound();
+            scheduleApply3D(this, false);
+          },
+          progress() { scheduleApply3D(this, false); },
+          setTranslate() { scheduleApply3D(this, false); },
           tap(s, e) {
             const sl = e.target.closest('.swiper-slide');
             if (!sl) return;
             const card = sl.querySelector('.product-card');
             if (!card) return;
             if (sl.classList.contains('swiper-slide-active')) {
-              try {
-                const prod = JSON.parse(card.dataset.prod.replace(/&apos;/g, "'"));
-                showModal(prod);
-              } catch (e) { }
+              const idxAttr = card.getAttribute('data-index');
+              if (idxAttr == null) return;
+              const prodIndex = +idxAttr;
+              const cat = restaurant && restaurant.categories && restaurant.categories[currentCat];
+              if (!cat || !cat.products || !cat.products[prodIndex]) return;
+              const prod = cat.products[prodIndex];
+              showModal(prod);
             } else {
               const idx = Array.from(s.slides).indexOf(sl);
               if (idx !== -1) s.slideTo(idx, 300);
@@ -755,6 +785,8 @@
         const prop = k.replace(/([A-Z])/g, '-$1').toLowerCase();
         document.documentElement.style.setProperty(`--${prop}`, t[k]);
       }
+      updateActiveCardStyles();
+
       if (t.font && t.font !== 'Inter') {
         const link = document.createElement('link');
         link.href = `https://fonts.googleapis.com/css2?family=${t.font.replace(' ', '+')}:wght@400;700;900&display=swap`;
@@ -764,7 +796,7 @@
       }
       const logoEl = document.getElementById('logo');
       if (restaurant.logoImage) {
-        logoEl.innerHTML = `<img src="${restaurant.logoImage}" alt="${restaurant.name}">`;
+        logoEl.innerHTML = `<img src="${restaurant.logoImage}" alt="${restaurant.name}" decoding="async">`;
       } else {
         logoEl.textContent = restaurant.logo;
       }
@@ -797,7 +829,7 @@
         freeMode: false,
         threshold: 8,
         on: {
-          init() { apply3D(this, true) },
+          init() { scheduleApply3D(this, true); },
           slideChange() {
             const newCat = this.realIndex % originalCats.length;
             if (newCat !== currentCat) {
@@ -805,11 +837,10 @@
               playSound();
               loadCategory();
             }
-            apply3D(this, true);
+            scheduleApply3D(this, true);
           },
-          progress() { apply3D(this, true) },
-          setTranslate() { apply3D(this, true) },
-          touchMove() { apply3D(this, true) },
+          progress() { scheduleApply3D(this, true); },
+          setTranslate() { scheduleApply3D(this, true); },
           tap(s, e) {
             const sl = e.target.closest('.swiper-slide');
             if (!sl || sl.classList.contains('swiper-slide-active')) return;
@@ -820,10 +851,10 @@
       });
 
       loadCategory();
-      
-      document.addEventListener('click', initAudio, { once: true });
-      document.addEventListener('touchstart', initAudio, { once: true });
-      
+
+      document.addEventListener('click', initAudio, { once: true, passive: true });
+      document.addEventListener('touchstart', initAudio, { once: true, passive: true });
+
       document.addEventListener('visibilitychange', () => {
         if (!document.hidden && audioCtx) {
           audioCtx.resume();
