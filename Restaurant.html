@@ -601,8 +601,16 @@
     }
 
     function hideSplash() {
-      if (splash) splash.classList.add('hidden');
-    }
+  if (!splash) return;
+  // علشان لو اتندَهت مرتين لأي سبب ما يحصلش فلاش غريب
+  if (hideSplash._done) return;
+  hideSplash._done = true;
+
+  setTimeout(() => {
+    splash.classList.add('hidden');
+  }, 900); // 1000ms = 1 ثانية بعد ما كل حاجة تجهز
+}
+
 
     let apply3DQueued = false;
     let last3DArgs = null;
